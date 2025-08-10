@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Login from "./pages/Login";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+function LayoutWrapper({ children }) {
+  const location = useLocation();
+  const noNavRoutes = ["/"]; // routes where navbar/footer is hidden
+  const hideNav = noNavRoutes.includes(location.pathname);
+
+  return (
+    <>
+      {!hideNav && <Navbar />}
+      {children}
+      {!hideNav && <Footer />}
+    </>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <LayoutWrapper>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        
+        </Routes>
+      </LayoutWrapper>
+    </Router>
   );
 }
 
