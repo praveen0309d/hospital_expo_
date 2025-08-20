@@ -7,7 +7,34 @@
   --text-color: #2C3E50; /* Dark gray text */
 }
 
+.spinner {
+  border: 3px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  border-top: 3px solid white;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+}
 
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* Add this to your Login.css or global styles */
+
+/* For the parent container (usually the body or a wrapper div) */
+.login-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+  padding: 1rem;
+  background: #f5f7fa; /* Optional background color */
+  font-family: poppins, sans-serif; /* Ensure consistent font */
+}
+
+/* Your existing login container with minor adjustments */
 .login-container {
   background: #fff;
   padding: 2rem;
@@ -15,6 +42,7 @@
   max-width: 420px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  /* Remove align-items: center since it's for flex children */
 }
 
 .login-header {
