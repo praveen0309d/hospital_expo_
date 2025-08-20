@@ -1,0 +1,48 @@
+/* Grid Layout for Cards */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Individual Card */
+.overview-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.overview-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* Icon */
+.overview-card .icon {
+  font-size: 40px;
+  margin-right: 15px;
+}
+
+/* Text Content */
+.overview-card .content h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #222;
+}
+
+.overview-card .content .title {
+  margin: 4px 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+}
+
+.overview-card .content .subtitle {
+  font-size: 12px;
+  color: #777;
+}

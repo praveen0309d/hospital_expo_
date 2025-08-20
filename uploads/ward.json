@@ -1,0 +1,32 @@
+[
+  {
+    "_id": "68a3283117515a2e7979e9ea",
+    "name": "Ward-1",
+    "specialty": "icu",
+    "beds": []
+  },
+  {
+    "_id": "68a3283117515a2e7979e9eb",
+    "name": "Ward-2",
+    "specialty": "isolation",
+    "beds": []
+  },
+  {
+    "_id": "68a3283117515a2e7979e9ec",
+    "name": "Ward-3",
+    "specialty": "burn",
+    "beds": []
+  },
+  {
+    "_id": "68a3283117515a2e7979e9ed",
+    "name": "Ward-4",
+    "specialty": "general",
+    "beds": []
+  },
+  {
+    "_id": "68a3283117515a2e7979ee",
+    "name": "Ward-5",
+    "specialty": "maternity",
+    "beds": []
+  }
+]
