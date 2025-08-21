@@ -1,14 +1,4 @@
-/* Navbar.css */
-:root {
-  /* Color Variables */
-  --patient-color: #2E86C1;    /* Calm Blue */
-  --doctor-color: #1ABC9C;     /* Teal Green */
-  --pharmacy-color: #28B463;   /* Fresh Green */
-  --admin-color: #F5B041;      /* Soft Orange */
-  --default-color: #5D6D7E;    /* Neutral Gray */
-  --white: #ffffff;
-  --shadow-color: rgba(0, 0, 0, 0.1);
-}
+
 
 .navbar {
   display: flex;
@@ -18,9 +8,10 @@
   color: var(--white);
   position: sticky;
   top: 0;
-  z-index: 1000;
+  /* z-index: 1000; */
   transition: all 0.3s ease;
-  box-shadow: 0 2px 10px var(--shadow-color);
+  /* box-shadow: 0 2px 10px var(--shadow-color); */
+  position: relative;
 }
 
 .brand {

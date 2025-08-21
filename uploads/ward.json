@@ -1,32 +1,108 @@
-[
-  {
-    "_id": "68a3283117515a2e7979e9ea",
-    "name": "Ward-1",
-    "specialty": "icu",
-    "beds": []
+{
+  "_id": {
+    "$oid": "68a61522d4e1f2a3b4c5d7f1"
   },
-  {
-    "_id": "68a3283117515a2e7979e9eb",
-    "name": "Ward-2",
-    "specialty": "isolation",
-    "beds": []
+  "patientId": "P-68a61522",
+  "name": "Praveen",
+  "age": "19",
+  "gender": "male",
+  "type": "OPD",
+  "medicalSpecialty": "Plastic Surgeon",
+  "status": "registered",
+  "wardNumber": "2",
+  "cartNumber": "10",
+  "password": "prav@123",
+  "contact": {
+    "email": "praveen2006@gmail.com",
+    "phone": "9123544946",
+    "address": "230-a"
   },
-  {
-    "_id": "68a3283117515a2e7979e9ec",
-    "name": "Ward-3",
-    "specialty": "burn",
-    "beds": []
+  "insurance": {
+    "provider": "1234",
+    "policyNumber": "j"
   },
-  {
-    "_id": "68a3283117515a2e7979e9ed",
-    "name": "Ward-4",
-    "specialty": "general",
-    "beds": []
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0ef"
   },
-  {
-    "_id": "68a3283117515a2e7979ee",
-    "name": "Ward-5",
-    "specialty": "maternity",
-    "beds": []
-  }
-]
+  "prescriptions": [
+    {
+      "date": "2025-08-21",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "time": "After breakfast"
+        },
+        {
+          "name": "Amoxicillin",
+          "dosage": "250mg",
+          "time": "Before lunch"
+        },
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "time": "At night before sleep"
+        },
+        {
+          "name": "Vitamin D3",
+          "dosage": "1000IU",
+          "time": "After dinner"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-22",
+      "medicines": [
+        {
+          "name": "Ibuprofen",
+          "dosage": "400mg",
+          "time": "After breakfast"
+        },
+        {
+          "name": "Azithromycin",
+          "dosage": "500mg",
+          "time": "Before lunch"
+        },
+        {
+          "name": "Loratadine",
+          "dosage": "10mg",
+          "time": "At night before sleep"
+        },
+        {
+          "name": "Calcium",
+          "dosage": "600mg",
+          "time": "After dinner"
+        }
+      ]
+    }
+  ],
+  "labReports": [
+    {
+      "date": "2025-08-18",
+      "testName": "Blood Test",
+      "results": "Normal",
+      "file": "/mypatient/uploads/blood_praveen.pdf"
+    },
+    {
+      "date": "2025-08-18",
+      "testName": "Blood Test",
+      "results": "low",
+      "file": "/mypatient/uploads/sugar_test_praveen.pdf"
+    }
+  ],
+  "appointments.": [
+    {
+      "date": "2025-08-01",
+      "description": "Follow-up consultation"
+    },
+    {
+      "date": "2025-08-10",
+      "description": "Routine checkup"
+    },
+    {
+      "date": "2025-08-23",
+      "description": "2000"
+    }
+  ]
+}
+

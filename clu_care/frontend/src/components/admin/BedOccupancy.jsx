@@ -103,8 +103,10 @@ const BedOccupancy = () => {
 
       {/* Wards */}
       {wards.map((ward) => (
-        <div key={ward._id} className="ward-section">
-          <h3>{ward.specialty}</h3>
+         <div key={ward._id} className="ward-card">
+<h3>{ward.specialty.charAt(0).toUpperCase() + ward.specialty.slice(1)}</h3>
+  {/* instead of ward.name */}
+    <p>Total Beds: {ward.beds.length}</p>
 
           {viewMode === "grid" ? (
             <div className="bed-grid">

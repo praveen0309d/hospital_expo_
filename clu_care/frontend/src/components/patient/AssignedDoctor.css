@@ -1,0 +1,218 @@
+/* AssignedDoctor.css */
+.assigned-doctor-container {
+  padding: 20px;
+  max-width: 100%;
+}
+
+.no-doctor {
+  text-align: center;
+  padding: 40px;
+  color: #718096;
+  font-size: 1.1rem;
+  background: #f7fafc;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e0;
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+.doctor-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.doctor-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-header {
+  text-align: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.doctor-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 8px 0;
+}
+
+.doctor-title {
+  font-size: 1rem;
+  color: #4a5568;
+  margin: 0;
+  font-weight: 500;
+}
+
+.doctor-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.detail-icon {
+  width: 20px;
+  height: 20px;
+  color: #4299e1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.detail-content {
+  flex: 1;
+}
+
+.detail-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4a5568;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 4px 0;
+}
+
+.detail-value {
+  font-size: 1rem;
+  color: #2d3748;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.detail-value.email {
+  color: #4299e1;
+  word-break: break-word;
+}
+
+/* Contact section */
+.doctor-contact {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.contact-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin: 0 0 16px 0;
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.email-btn {
+  background: #4299e1;
+  color: white;
+}
+
+.email-btn:hover {
+  background: #3182ce;
+  transform: translateY(-1px);
+}
+
+.call-btn {
+  background: #48bb78;
+  color: white;
+}
+
+.call-btn:hover {
+  background: #38a169;
+  transform: translateY(-1px);
+}
+
+.btn-icon {
+  margin-right: 6px;
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .assigned-doctor-container {
+    padding: 15px;
+  }
+  
+  .doctor-card {
+    padding: 20px;
+  }
+  
+  .doctor-name {
+    font-size: 1.3rem;
+  }
+  
+  .contact-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .contact-btn {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .doctor-card {
+    padding: 16px;
+  }
+  
+  .doctor-name {
+    font-size: 1.2rem;
+  }
+  
+  .detail-item {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .detail-icon {
+    margin-top: 0;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.doctor-card {
+  animation: fadeIn 0.5s ease-out;
+}

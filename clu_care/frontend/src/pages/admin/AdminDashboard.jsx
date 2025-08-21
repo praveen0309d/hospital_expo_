@@ -63,9 +63,9 @@ const AdminDashboard = () => {
     { id: 'dashboard', label: 'Dashboard', icon: <BedIcon /> },
     { id: 'patients', label: 'Patients', icon: <PatientsIcon /> },
     { id: 'staff', label: 'Staff', icon: <StaffIcon /> },
-    { id: 'inventory', label: 'Inventory', icon: <InventoryIcon /> },
-    { id: 'appointments', label: 'Appointments', icon: <AppointmentsIcon /> },
-    { id: 'reports', label: 'Reports', icon: <FinanceIcon /> },
+    // { id: 'inventory', label: 'Inventory', icon: <InventoryIcon /> },
+    // { id: 'appointments', label: 'Appointments', icon: <AppointmentsIcon /> },
+    // { id: 'reports', label: 'Reports', icon: <FinanceIcon /> },
     { id: 'average-patients', label: 'Avg Patients', icon: <PatientsIcon /> },
     { id: 'bed-occupancy', label: 'Bed Occupancy', icon: <BedIcon /> },
     {id :'emergency',label: 'Emergency',icon: <EmergencyIcon  />}

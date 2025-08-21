@@ -1,92 +1,168 @@
+/* Login.css */
 :root {
-  --primary-color: #2E86C1; /* Calm Blue */
-  --secondary-color: #28B463; /* Fresh Green */
-  --accent-color: #F5B041; /* Soft Orange */
-  --teal-color: #1ABC9C; /* Teal Green */
-  --bg-color: #F8F9F9; /* Light background */
-  --text-color: #2C3E50; /* Dark gray text */
+  --primary-color: #2E86C1;
+  --secondary-color: #28B463;
+  --accent-color: #F5B041;
+  --teal-color: #1ABC9C;
+  --purple-color: #9B59B6;
+  --bg-color: #F8F9F9;
+  --text-color: #2C3E50;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+  --radius: 12px;
 }
 
-.spinner {
-  border: 3px solid rgba(255,255,255,0.3);
-  border-radius: 50%;
-  border-top: 3px solid white;
-  width: 20px;
-  height: 20px;
-  animation: spin 1s linear infinite;
-  display: inline-block;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-/* Add this to your Login.css or global styles */
-
-/* For the parent container (usually the body or a wrapper div) */
 .login-page-wrapper {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Full viewport height */
-  padding: 1rem;
-  background: #f5f7fa; /* Optional background color */
-  font-family: poppins, sans-serif; /* Ensure consistent font */
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+  line-height: 1.6;
+  animation: fadeIn 0.8s ease;
 }
 
-/* Your existing login container with minor adjustments */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .login-container {
-  background: #fff;
-  padding: 2rem;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 40px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
   width: 100%;
-  max-width: 420px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  /* Remove align-items: center since it's for flex children */
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-.login-header {
+.login-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, 
+    var(--primary-color), 
+    var(--teal-color), 
+    var(--secondary-color),
+    var(--accent-color),
+    var(--purple-color)
+  );
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
+.login-container:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-5px);
+}
+
+.login-branding {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.login-logo {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  transition: var(--transition);
+}
+
+.login-logo:hover {
+  transform: scale(1.05);
 }
 
 .login-header h2 {
-  margin: 0;
-  color: var(--primary-color);
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--primary-color), var(--teal-color));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .login-header p {
-  font-size: 0.9rem;
-  color: #7f8c8d;
+  color: #718096;
+  font-size: 16px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.error-message {
+  background-color: #fed7d7;
+  color: #c53030;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  border-left: 4px solid #f56565;
+  animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }
 
 .role-selection {
-  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .role-selection label {
-  font-weight: 500;
-  display: block;
-  margin-bottom: 0.5rem;
+  font-weight: 600;
   color: var(--text-color);
 }
 
 .role-options {
   display: flex;
-  gap: 0.5rem;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 .role-option {
-  flex: 1;
-  border: 2px solid transparent;
-  border-radius: 8px;
-  padding: 0.6rem 0.5rem;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 30px;
   cursor: pointer;
-  transition: all 0.25s ease;
-  color: var(--text-color);
-  font-size: 0.9rem;
+  transition: var(--transition);
+  border: 2px solid;
+  font-weight: 500;
+  font-size: 14px;
+  user-select: none;
+}
+
+.role-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .role-option input {
@@ -94,59 +170,186 @@
 }
 
 .role-option span {
-  font-weight: 500;
+  margin-left: 0;
 }
 
-.role-option:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  font-size: 0.9rem;
-  margin-bottom: 0.4rem;
-  color: var(--text-color);
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.6rem;
-  border: 1.5px solid #ccc;
-  border-radius: 6px;
-  outline: none;
-  font-size: 0.95rem;
-  transition: border-color 0.2s ease;
-}
-
-.form-group input:focus {
+/* Role-specific colors */
+.role-option[style*="patient"] {
   border-color: var(--primary-color);
 }
 
-.login-button {
-  background-color: var(--primary-color);
-  color: #fff;
-  border: none;
-  width: 100%;
-  padding: 0.8rem;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.25s ease;
+.role-option[style*="doctor"] {
+  border-color: var(--teal-color);
 }
 
-.login-button:hover {
-  background-color: #1f5f8d;
+.role-option[style*="admin"] {
+  border-color: var(--accent-color);
 }
-.login-logo {
-  height: 100px;              /* Fixed height */
-  width: auto;                /* Maintain aspect ratio */
-  margin: 0 auto 1rem;        /* Centered with bottom margin */
-  display: block;             /* Ensures proper centering */
-  object-fit: contain;        /* Prevents distortion */
-  max-width: 100%;            /* Ensures it doesn't overflow container */
+
+.role-option[style*="pharmacy"] {
+  border-color: var(--secondary-color);
 }
+
+.role-option[style*="lab"] {
+  border-color: var(--purple-color);
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-login label {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.form-login input {
+  padding: 14px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: var(--transition);
+  background-color: #f8fafc;
+}
+
+.form-login input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(46, 134, 193, 0.2);
+  background-color: white;
+}
+
+.form-login input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.login-button {
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.login-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: var(--transition);
+}
+
+.login-button:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.login-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.login-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Spinner animation */
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 30px 20px;
+  }
+  
+  .role-options {
+    justify-content: center;
+  }
+  
+  .role-option {
+    flex: 1;
+    min-width: 80px;
+    justify-content: center;
+  }
+  
+  .login-header h2 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page-wrapper {
+    padding: 10px;
+  }
+  
+  .role-options {
+    flex-direction: column;
+  }
+  
+  .role-option {
+    width: 100%;
+  }
+  
+  .login-header h2 {
+    font-size: 22px;
+  }
+}
+
+/* Focus accessibility improvements */
+button:focus,
+input:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Animation for form elements */
+.form-login input,
+.role-option,
+.login-button {
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Add delay for sequential animation */
+.role-selection { animation-delay: 0.1s; }
+.form-login:nth-child(1) { animation-delay: 0.2s; }
+.form-login:nth-child(2) { animation-delay: 0.3s; }
+.login-button { animation-delay: 0.4s; }

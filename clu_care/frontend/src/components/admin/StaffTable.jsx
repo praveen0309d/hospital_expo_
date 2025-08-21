@@ -327,29 +327,28 @@ const fetchStaff = async () => {
             <h2>{editingId ? "Edit Staff" : "Add New Staff Member"}</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-grid">
-                <div className="form-group">
+                <div className="staff_form">
                   <label>Full Name</label>
                   <input type="text" name="name" value={formData.name} onChange={handleChange} required />
                 </div>
-                <div className="form-group">
+                <div className="staff_form">
                   <label>Email</label>
                   <input type="email" name="email" value={formData.email} onChange={handleChange} required />
                 </div>
-                <div className="form-group">
+                <div className="staff_form">
                   <label>Phone</label>
                   <input type="text" name="phone" value={formData.phone} onChange={handleChange} required />
                 </div>
-                <div className="form-group">
+                <div className="staff_form">
                   <label>Role</label>
                   <select name="role" value={formData.role} onChange={handleChange} required>
                     <option value="doctor">Doctor</option>
                     <option value="nurse">Nurse</option>
                     <option value="technician">Technician</option>
-                    <option value="admin">Administrator</option>
-                    <option value="other">Other</option>
+
                   </select>
                 </div>
-                <div className="form-group">
+                <div className="staff_form">
                   <label>Department</label>
                   <select name="department" value={formData.department} onChange={handleChange} required>
                     <option value="">Select Department</option>
@@ -358,7 +357,7 @@ const fetchStaff = async () => {
                     ))}
                   </select>
                 </div>
-                <div className="form-group">
+                <div className="staff_form">
                   <label>Specialization</label>
                   <input 
                     type="text" 
@@ -368,15 +367,15 @@ const fetchStaff = async () => {
                     disabled={formData.role !== 'doctor'}
                   />
                 </div>
-                <div className="form-group">
+                <div className="staff_form">
                   <label>Qualifications</label>
                   <input type="text" name="qualifications" value={formData.qualifications} onChange={handleChange} />
                 </div>
-                <div className="form-group">
+                <div className="staff_form">
                   <label>Join Date</label>
                   <input type="date" name="joinDate" value={formData.joinDate} onChange={handleChange} required />
                 </div>
-                <div className="form-group">
+                <div className="staff_form">
                   <label>Status</label>
                   <select name="status" value={formData.status} onChange={handleChange} required>
                     <option value="active">Active</option>
@@ -384,7 +383,7 @@ const fetchStaff = async () => {
                     <option value="inactive">Inactive</option>
                   </select>
                 </div>
-                <div className="form-group">
+                <div className="staff_form">
                   <label>Password</label>
                   <input 
                     type="password" 

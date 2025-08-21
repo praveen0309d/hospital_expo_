@@ -1,394 +1,308 @@
 import React, { useState, useEffect } from 'react';
-import { FaAmbulance, FaUserMd, FaExclamationTriangle, FaProcedures, FaBed } from 'react-icons/fa';
+import './Emergency.css';
+import api from '../../services/api';
 
 const Emergency = () => {
-  const [emergencyCases, setEmergencyCases] = useState([]);
-  const [doctors, setDoctors] = useState([]);
-  const [wards, setWards] = useState([]);
-  const [availableBeds, setAvailableBeds] = useState({});
-  const [formData, setFormData] = useState({
-    patientName: '',
-    condition: '',
-    location: '',
-    priority: 'medium',
-    description: '',
-    assignedDoctor: '',
-    criticalWard: '',
-    bedNumber: ''
-  });
+  const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [departments, setDepartments] = useState([]);
+  const [availableDoctors, setAvailableDoctors] = useState([]);
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
 
-  // Fetch emergency cases, doctors, and wards on component mount
-  useEffect(() => {
-    fetchEmergencyCases();
-    fetchDoctors();
-    fetchWards();
-  }, []);
+  const [formData, setFormData] = useState({
+    name: '',
+    age: '',
+    gender: 'male',
+    medicalSpecialty: '',
+    assignedDoctor: '',
+    wardNumber: '',
+    cartNumber: ''
+  });
 
-  const fetchEmergencyCases = async () => {
+  // Fetch patients
+  const fetchPatients = async () => {
     try {
-      const response = await fetch('/api/emergency');
-      const data = await response.json();
-      setEmergencyCases(data);
-    } catch (error) {
-      console.error('Error fetching emergency cases:', error);
-    }
-  };
-
-  const fetchDoctors = async () => {
-    try {
-      const response = await fetch('/api/doctors?available=true');
-      const data = await response.json();
-      setDoctors(data);
-    } catch (error) {
-      console.error('Error fetching doctors:', error);
-    }
-  };
-
-  const fetchWards = async () => {
-    try {
-      const response = await fetch('/api/wards');
-      const data = await response.json();
-      setWards(data);
-      
-      // Fetch available beds for each ward
-      const bedsData = {};
-      for (const ward of data) {
-        const bedResponse = await fetch(`/api/wards/${ward._id}/available-beds`);
-        const bedData = await bedResponse.json();
-        bedsData[ward._id] = bedData.availableBeds;
-      }
-      setAvailableBeds(bedsData);
-    } catch (error) {
-      console.error('Error fetching wards:', error);
-    }
-  };
-
-  // Automatically suggest doctors and wards based on condition
-  useEffect(() => {
-    if (formData.condition) {
-      const specialty = getSpecialtyFromCondition(formData.condition);
-      const suitableDoctors = doctors.filter(doctor => 
-        doctor.department.toLowerCase().includes(specialty.toLowerCase())
-      );
-      
-      // Find appropriate ward based on specialty
-      const suitableWard = wards.find(ward => 
-        ward.specialty && ward.specialty.toLowerCase() === specialty.toLowerCase()
-      );
-      
-      if (suitableDoctors.length > 0 && !formData.assignedDoctor) {
-        setFormData(prev => ({
-          ...prev,
-          assignedDoctor: suitableDoctors[0]._id
-        }));
-      }
-      
-      if (suitableWard && !formData.criticalWard) {
-        setFormData(prev => ({
-          ...prev,
-          criticalWard: suitableWard._id
-        }));
-        
-        // Check if ward has available beds
-        if (availableBeds[suitableWard._id] <= 0) {
-          setSuccess(`Warning: ${suitableWard.name} is full. Please select another ward.`);
-          setTimeout(() => setSuccess(''), 5000);
-        }
-      }
-    }
-  }, [formData.condition, doctors, wards, availableBeds]);
-
-  const getSpecialtyFromCondition = (condition) => {
-    const conditionLower = condition.toLowerCase();
-    
-    if (conditionLower.includes('heart') || conditionLower.includes('cardio') || 
-        conditionLower.includes('chest pain')) {
-      return 'cardiology';
-    } else if (conditionLower.includes('brain') || conditionLower.includes('neuro') ||
-               conditionLower.includes('stroke')) {
-      return 'neurology';
-    } else if (conditionLower.includes('bone') || conditionLower.includes('fracture') || 
-               conditionLower.includes('ortho')) {
-      return 'orthopedics';
-    } else if (conditionLower.includes('child') || conditionLower.includes('pediatric')) {
-      return 'pediatrics';
-    } else if (conditionLower.includes('preg') || conditionLower.includes('birth') || 
-               conditionLower.includes('obstetrics') || conditionLower.includes('labor')) {
-      return 'maternity';
-    } else if (conditionLower.includes('burn') || conditionLower.includes('fire')) {
-      return 'burn';
-    } else if (conditionLower.includes('infectious') || conditionLower.includes('covid') ||
-               conditionLower.includes('isolation')) {
-      return 'isolation';
-    } else if (conditionLower.includes('critical') || conditionLower.includes('icu')) {
-      return 'icu';
-    }
-    
-    return 'general';
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    try {
-      const response = await fetch('/api/emergency', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          // Get ward name from selected ward ID
-          criticalWard: wards.find(w => w._id === formData.criticalWard)?.name
-        }),
-      });
-      
-      if (response.ok) {
-        setSuccess('Emergency case created successfully!');
-        setFormData({
-          patientName: '',
-          condition: '',
-          location: '',
-          priority: 'medium',
-          description: '',
-          assignedDoctor: '',
-          criticalWard: '',
-          bedNumber: ''
-        });
-        fetchEmergencyCases();
-        fetchWards(); // Refresh ward data
-        setTimeout(() => setSuccess(''), 3000);
-      } else {
-        console.error('Failed to create emergency case');
-      }
-    } catch (error) {
-      console.error('Error creating emergency case:', error);
+      setLoading(true);
+      const res = await api.get('/patients');
+      setPatients(res.data);
+    } catch (err) {
+      console.error('Error fetching patients:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const resolveCase = async (caseId) => {
+  // Fetch departments
+  const fetchDepartments = async () => {
     try {
-      const response = await fetch(`/api/emergency/${caseId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: 'resolved' }),
-      });
-      
-      if (response.ok) {
-        setSuccess('Case resolved successfully!');
-        fetchEmergencyCases();
-        setTimeout(() => setSuccess(''), 3000);
-      }
-    } catch (error) {
-      console.error('Error resolving case:', error);
+      const res = await api.get('/departments');
+      setDepartments(res.data);
+    } catch (err) {
+      console.error('Error fetching departments:', err);
     }
   };
 
-  // Filter wards based on priority and condition
-const getFilteredWards = () => {
-  if (!wards || !Array.isArray(wards)) {
-    return []; // always return an array
-  }
+  // Fetch available doctors for selected specialty
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      if (!formData.medicalSpecialty) {
+        setAvailableDoctors([]);
+        return;
+      }
+      try {
+        const res = await api.get(`http://localhost:5000/staff/available?specialty=${formData.medicalSpecialty}`);
+        setAvailableDoctors(res.data);
+      } catch (err) {
+        console.error('Error fetching doctors:', err);
+      }
+    };
+    fetchDoctors();
+  }, [formData.medicalSpecialty]);
 
-  return wards.filter(ward => ward.availableBeds > 0);
-};
+  useEffect(() => {
+    fetchPatients();
+    fetchDepartments();
+  }, []);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const patientData = {
+        ...formData,
+        type: 'IPD', // Default to Inpatient for emergency
+        assignedDoctor: selectedDoctor?._id || null,
+        status: 'admitted'
+      };
+
+      await api.post('/patients', patientData);
+      
+      // Reset form and close
+      setShowAddForm(false);
+      setFormData({
+        name: '',
+        age: '',
+        gender: 'male',
+        medicalSpecialty: '',
+        assignedDoctor: '',
+        wardNumber: '',
+        cartNumber: ''
+      });
+      setSelectedDoctor(null);
+      
+      // Refresh patient list
+      fetchPatients();
+      alert('Patient added successfully!');
+    } catch (err) {
+      console.error('Error adding patient:', err);
+      alert('Failed to add patient. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredPatients = patients.filter(p =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (p.patientId || '').toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div className="emergency-management">
-      <div className="emergency-header">
-        <h1><FaAmbulance /> Emergency Department</h1>
-        <p>Manage emergency cases and assign critical care</p>
-      </div>
+    <div className="emergency-container">
+      <h2>Emergency Department - Patient Overview</h2>
       
-      <div className="emergency-content">
-        <div className="emergency-form-section">
-          <h2><FaExclamationTriangle /> New Emergency Case</h2>
-          
-          <form onSubmit={handleSubmit} className="emergency-form">
-            <div className="form-row">
-              <div className="form-group">
-                <label>Patient Name *</label>
-                <input
-                  type="text"
-                  name="patientName"
-                  value={formData.patientName}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              
-              <div className="form-group">
-                <label>Condition *</label>
-                <input
-                  type="text"
-                  name="condition"
-                  value={formData.condition}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="e.g., Chest pain, Fracture, Head injury"
-                />
-              </div>
-            </div>
-            
-            <div className="form-row">
-              <div className="form-group">
-                <label>Location *</label>
-                <input
-                  type="text"
-                  name="location"
-                  value={formData.location}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Where was the patient found?"
-                />
-              </div>
-              
-              <div className="form-group">
-                <label>Priority *</label>
-                <select
-                  name="priority"
-                  value={formData.priority}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                  <option value="critical">Critical</option>
-                </select>
-              </div>
-            </div>
-            
-            <div className="form-group">
-              <label>Description</label>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleInputChange}
-                rows="3"
-                placeholder="Detailed description of symptoms and situation"
-              />
-            </div>
-            
-            <div className="form-row">
-              <div className="form-group">
-                <label>Critical Ward <FaBed /></label>
-                <select
-                  name="criticalWard"
-                  value={formData.criticalWard}
-                  onChange={handleInputChange}
-                  required
-                >
-                  <option value="">Select a ward</option>
-                  {getFilteredWards().map(ward => (
-                    <option 
-                      key={ward._id} 
-                      value={ward._id}
-                      disabled={availableBeds[ward._id] <= 0}
-                    >
-                      {ward.name} ({ward.specialty}) - 
-                      {availableBeds[ward._id] <= 0 ? ' FULL' : ` ${availableBeds[ward._id]} beds available`}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              
-              <div className="form-group">
-                <label>Assign Doctor <FaUserMd /></label>
-                <select
-                  name="assignedDoctor"
-                  value={formData.assignedDoctor}
-                  onChange={handleInputChange}
-                >
-                  <option value="">Select a doctor</option>
-                  {doctors.map(doctor => (
-                    <option key={doctor._id} value={doctor._id}>
-                      Dr. {doctor.name} - {doctor.department}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            
-            <button type="submit" disabled={loading} className="submit-btn">
-              {loading ? 'Processing...' : 'Create Emergency Case'}
-            </button>
-          </form>
-          
-          {success && (
-            <div className={success.includes('Warning') ? "warning-message" : "success-message"}>
-              {success}
-            </div>
-          )}
+      <div className="controls-container">
+        <div className="search-container">
+          <input
+            type="text"
+            placeholder="Search patients..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
         </div>
         
-        <div className="emergency-list-section">
-          <h2><FaProcedures /> Active Emergency Cases</h2>
-          
-          {emergencyCases.filter(c => c.status !== 'resolved').length === 0 ? (
-            <p className="no-cases">No active emergency cases</p>
-          ) : (
-            <div className="cases-grid">
-              {emergencyCases
-                .filter(caseItem => caseItem.status !== 'resolved')
-                .map(caseItem => (
-                <div key={caseItem._id} className={`case-card priority-${caseItem.priority}`}>
-                  <div className="case-header">
-                    <h3>{caseItem.patientName}</h3>
-                    <span className={`priority-badge ${caseItem.priority}`}>
-                      {caseItem.priority}
-                    </span>
-                  </div>
-                  
-                  <div className="case-details">
-                    <p><strong>Condition:</strong> {caseItem.condition}</p>
-                    <p><strong>Location:</strong> {caseItem.location}</p>
-                    <p><strong>Ward:</strong> {caseItem.criticalWard || 'Not assigned'}</p>
-                    
-                    {caseItem.description && (
-                      <p><strong>Description:</strong> {caseItem.description}</p>
-                    )}
-                    
-                    {caseItem.assignedDoctor && (
-                      <p><strong>Doctor:</strong> {
-                        doctors.find(d => d._id === caseItem.assignedDoctor)?.name || 
-                        'Doctor assigned'
-                      }</p>
-                    )}
-                    
-                    <p><strong>Received:</strong> {new Date(caseItem.createdAt).toLocaleString()}</p>
-                  </div>
-                  
-                  <div className="case-actions">
-                    <button 
-                      onClick={() => resolveCase(caseItem._id)}
-                      className="resolve-btn"
-                    >
-                      Mark as Resolved
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <button 
+          onClick={() => setShowAddForm(true)} 
+          className="add-patient-btn emergency-btn"
+        >
+          + Add New Patient
+        </button>
       </div>
+
+      {loading ? (
+        <div className="loading">Loading patients...</div>
+      ) : (
+        <table className="emergency-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Specialist</th>
+              <th>Doctor</th>
+              <th>Ward</th>
+              <th>Room</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredPatients.length > 0 ? (
+              filteredPatients.map(p => (
+                <tr key={p._id}>
+                  <td>{p.name}</td>
+                  <td>{p.age}</td>
+                  <td>{p.gender}</td>
+                  <td>{p.medicalSpecialty || 'Not specified'}</td>
+                  <td>{p.assignedDoctorName || p.assignedDoctor?.name || 'Unassigned'}</td>
+                  <td>{p.wardNumber || '-'}</td>
+                  <td>{p.cartNumber || '-'}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="no-data">No patients found</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      )}
+
+      {/* Add Patient Form Modal */}
+      {showAddForm && (
+        <div className="modal-overlay">
+          <div className="modal-content emergency-modal">
+            <div className="modal-header">
+              <h3>Add New Emergency Patient</h3>
+              <button 
+                onClick={() => setShowAddForm(false)} 
+                className="close-btn"
+              >
+                ×
+              </button>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="emergency-form">
+              <div className="form-row">
+                <div className="emg_form">
+                  <label>Full Name *</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+                
+                <div className="emg_form">
+                  <label>Age *</label>
+                  <input
+                    type="number"
+                    name="age"
+                    value={formData.age}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+              </div>
+              
+              <div className="form-row">
+                <div className="emg_form">
+                  <label>Gender *</label>
+                  <select
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                  >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                
+                <div className="emg_form">
+                  <label>Specialty *</label>
+                  <select
+                    name="medicalSpecialty"
+                    value={formData.medicalSpecialty}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select Specialty</option>
+                    {departments.map(d => (
+                      <option key={d._id} value={d.name}>{d.name}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              
+              <div className="form-row">
+                <div className="emg_form">
+                  <label>Assigned Doctor</label>
+                  <select
+                    value={selectedDoctor?._id || ''}
+                    onChange={(e) => {
+                      const doc = availableDoctors.find(d => d._id === e.target.value);
+                      setSelectedDoctor(doc || null);
+                    }}
+                  >
+                    <option value="">Select Doctor</option>
+                    {availableDoctors.map(d => (
+                      <option key={d._id} value={d._id}>{d.name}</option>
+                    ))}
+                  </select>
+                </div>
+                
+                <div className="emg_form">
+                  <label>Ward Number</label>
+                  <input
+                    type="text"
+                    name="wardNumber"
+                    value={formData.wardNumber}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              
+              <div className="form-row">
+                <div className="emg_form">
+                  <label>Room/Cart Number</label>
+                  <input
+                    type="text"
+                    name="cartNumber"
+                    value={formData.cartNumber}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              
+              <div className="form-actions">
+                <button 
+                  type="button" 
+                  onClick={() => setShowAddForm(false)}
+                  className="cancel-btn"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  disabled={loading}
+                  className="submit-btn"
+                >
+                  {loading ? 'Adding...' : 'Add Patient'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

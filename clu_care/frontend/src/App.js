@@ -5,9 +5,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/admin/AdminDashboard";
-// import AddPatientPage from "./pages/admin/AddPatientPage";
-// import AddDoctorPage from "./pages/admin/AddDoctorPage";
-// import ManageUsers from "./pages/admin/ManageUsers";
+import PatientDashboard from "./pages/patient/PatientDashboard";
+// import Prescriptions from "./components/patient/Prescriptions";
 function LayoutWrapper({ children }) {
   const location = useLocation();
   const noNavRoutes = ["/"]; // routes where navbar/footer is hidden
@@ -29,9 +28,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          {/* <Route path="/admin/manage-users" element={<ManageUsers />} /> */}
-          {/* <Route path="/admin/add-patient" element={<AddPatientPage />} />
-          <Route path="/admin/add-doctor" element={<AddDoctorPage/>}/> */}
+          <Route path="/patient/dashboard" element={<PatientDashboard />} />
+          {/* <Route path="/prescriptions/:patientId" element={<Prescriptions />} /> */}
 
         </Routes>
       </LayoutWrapper>

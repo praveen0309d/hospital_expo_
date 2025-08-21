@@ -14,6 +14,7 @@ const Navbar = () => {
     localStorage.removeItem("email");
     navigate("/login");
   };
+  
 
   // Get color based on role
   const getNavbarColor = () => {

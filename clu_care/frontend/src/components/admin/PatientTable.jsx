@@ -30,7 +30,7 @@ const PatientTable = ({ showAddForm = true }) => {
   });
 
   // Fetch departments
-  const fetchDepartments = async () => {
+const fetchDepartments = async () => {
     try {
       const res = await api.get('/departments');
       setDepartments(res.data);
@@ -42,7 +42,7 @@ const PatientTable = ({ showAddForm = true }) => {
   // Fetch patients
   const fetchPatients = async () => {
     try {
-      const res = await api.get('http://localhost:5000/api/patients');
+      const res = await api.get('/patients'); // ✅ fixed (use api instance)
       setPatients(res.data);
     } catch (err) {
       console.error('Error fetching patients:', err);
@@ -54,6 +54,8 @@ const PatientTable = ({ showAddForm = true }) => {
     fetchPatients();
   }, []);
 
+  // Fetch patients
+
   // Fetch available doctors for selected specialty
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -62,8 +64,7 @@ const PatientTable = ({ showAddForm = true }) => {
         return;
       }
       try {
-        const res = await api.get(`http://localhost:5000/staff/available?specialty=${formData.medicalSpecialty}`);
-
+         const res = await api.get(`http://localhost:5000/staff/available?specialty=${formData.medicalSpecialty}`);
         setAvailableDoctors(res.data);
       } catch (err) {
         console.error('Error fetching doctors:', err);
@@ -71,8 +72,6 @@ const PatientTable = ({ showAddForm = true }) => {
     };
     fetchDoctors();
   }, [formData.medicalSpecialty]);
-
-  // Handle form input
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name.includes('.')) {
@@ -128,45 +127,96 @@ const PatientTable = ({ showAddForm = true }) => {
     }
   };
 
-  // Edit patient
-  const handleEdit = (patient) => {
-    setEditingPatient(patient);
+// Edit patient - Enhanced version
+const handleEdit = (patient) => {
+  setEditingPatient(patient);
 
-    setFormData({
-      name: patient.name || '',
-      age: patient.age || '',
-      gender: patient.gender || 'male',
-      bloodGroup: patient.bloodGroup || 'A+',
-      type: patient.type || 'OPD',
-      medicalSpecialty: patient.medicalSpecialty || '',
-      description: patient.description || '',
-      password: '',
-      contact: patient.contact || { phone: '', email: '', address: '' },
-      insurance: patient.insurance || { provider: '', policyNumber: '' },
-      wardNumber: patient.wardNumber || '',
-      cartNumber: patient.cartNumber || ''
-    });
+  setFormData({
+    name: patient.name || '',
+    age: patient.age || '',
+    gender: patient.gender || 'male',
+    bloodGroup: patient.bloodGroup || 'A+',
+    type: patient.type || 'OPD',
+    medicalSpecialty: patient.medicalSpecialty || '',
+    description: patient.description || '',
+    password: '', // Don't pre-fill password for security
+    contact: patient.contact || { phone: '', email: '', address: '' },
+    insurance: patient.insurance || { provider: '', policyNumber: '' },
+    wardNumber: patient.wardNumber || '',
+    cartNumber: patient.cartNumber || '',
+    assignedDoctor: patient.assignedDoctor ? patient.assignedDoctor.toString() : '' // Ensure string format
+  });
 
-    setSelectedDoctor(
-      patient.assignedDoctor
-        ? { _id: patient.assignedDoctor, name: patient.assignedDoctorName }
-        : null
-    );
+  setSelectedDoctor(
+    patient.assignedDoctor
+      ? { 
+          _id: patient.assignedDoctor.toString(), 
+          name: patient.assignedDoctorName || 'Unknown Doctor' 
+        }
+      : null
+  );
 
-    setShowAddPopup(true);
-  };
+  setShowAddPopup(true);
+};
 
-  // Delete patient
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this patient?')) return;
-    try {
-      await api.delete(`/patients/${id}`);
-      fetchPatients();
-    } catch (err) {
-      console.error('Error deleting patient:', err);
+// Delete patient - Enhanced version with better error handling
+const handleDelete = async (id) => {
+  if (!window.confirm('Are you sure you want to delete this patient?')) return;
+  
+  try {
+    const response = await api.delete(`/patients/${id}`);
+    
+    if (response.data.message) {
+      alert(response.data.message);
     }
-  };
+    
+    // Refresh the patient list
+    fetchPatients();
+    
+  } catch (err) {
+    console.error('Error deleting patient:', err);
+    
+    if (err.response?.data?.error) {
+      alert(`Error: ${err.response.data.error}`);
+    } else {
+      alert('Failed to delete patient. Please try again.');
+    }
+  }
+};
 
+// Save patient (create or update)
+const handleSave = async (e) => {
+  e.preventDefault();
+  try {
+    const dataToSend = { ...formData };
+    
+    // Remove MongoDB _id field if it exists
+    delete dataToSend._id;
+    
+    if (editingPatient) {
+      // Update existing patient
+      const response = await api.put(`/patients/${editingPatient._id}`, dataToSend);
+      alert(response.data.message || 'Patient updated successfully!');
+    } else {
+      // Create new patient
+      const response = await api.post('/patients', dataToSend);
+      alert(response.data.message || 'Patient created successfully!');
+    }
+    
+    setShowAddPopup(false);
+    setEditingPatient(null);
+    fetchPatients(); // Refresh the list
+    
+  } catch (err) {
+    console.error('Error saving patient:', err);
+    
+    if (err.response?.data?.error) {
+      alert(`Error: ${err.response.data.error}`);
+    } else {
+      alert('Failed to save patient. Please try again.');
+    }
+  }
+};
   const filteredPatients = patients.filter(p =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (p.patientId || '').toLowerCase().includes(searchTerm.toLowerCase())
