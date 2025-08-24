@@ -149,19 +149,19 @@ function PatientPrediction() {
                 <div className="results-grid">
                   <div className="result-card">
                     <h3>Patient Admissions</h3>
-                    <p className="bed-value">
+                    <p className="result-value">
                       {predictionResult.predicted_patients}
                     </p>
                   </div>
                   <div className="result-card">
                     <h3>Beds Needed</h3>
-                    <p className="bed-value">
+                    <p className="result-value">
                       {predictionResult.predicted_beds_needed}
                     </p>
                   </div>
                   <div className="result-card">
                     <h3>Staff Needed</h3>
-                    <p className="bed-value">
+                    <p className="result-value">
                       {predictionResult.predicted_staff_needed}
                     </p>
                   </div>

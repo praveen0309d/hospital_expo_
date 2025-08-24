@@ -46,7 +46,7 @@ def get_patient(patient_id):
             "assignedDoctor": assigned_doctor,
             "appointments": patient.get("appointments", []),
             "prescriptions": patient.get("prescriptions", []),
-            "labReports": clean_lab_reports(patient.get("labReports", []))
+            "labReports": patient.get("labReports", [])
         }
 
         return jsonify(patient_data), 200
@@ -84,33 +84,20 @@ def get_all_patients():
 
 
 
-
 # Absolute path to your uploads folder
 UPLOAD_FOLDER = r"C:\Users\prave\OneDrive\Documents\hospital_expo_\clu_care\backend\uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-from werkzeug.utils import secure_filename
-
+# Route to serve uploaded files (PDF, images)
 @patient_bp.route('/uploads/<path:filename>')
 def uploaded_file(filename):
     try:
-        safe_name = secure_filename(filename)  # prevents traversal
-        return send_from_directory(
-            UPLOAD_FOLDER,
-            safe_name,
-            as_attachment=False
-        )
+        # as_attachment=False => opens in browser
+            return send_from_directory(
+        'uploads',  # folder where files are stored
+        filename,
+        as_attachment=True
+    )
     except FileNotFoundError:
         return "File not found on server", 404
 
-
-def clean_lab_reports(lab_reports):
-    cleaned = []
-    for report in lab_reports:
-        cleaned.append({
-            "date": report.get("date"),
-            "testName": report.get("testName"),
-            "results": report.get("results"),
-            "file": report.get("file")  # ideally just filename, not full path
-        })
-    return cleaned

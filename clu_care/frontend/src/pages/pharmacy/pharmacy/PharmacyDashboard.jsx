@@ -71,7 +71,7 @@ const PharmacyDashboard = () => {
           viewport={{ once: true, amount: 0.3 }}
           whileHover={hoverEffect}
           whileTap={tapEffect}
-          onClick={() => navigate("/pharmacy/prescriptions")}
+          onClick={() => navigate("/pharmacy/view-prescriptions")}
           bg="#20c997"
           color="#fff"
         >

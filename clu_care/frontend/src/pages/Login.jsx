@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import logo from "../assets/logo.png";
-import Chatbot from "../Chatbot";
-import { Link } from "react-router-dom";
-import API_URL from "../services/api";
+
 function Login() {
   const [role, setRole] = useState("patient");
   const [email, setEmail] = useState("");
@@ -26,7 +24,7 @@ function Login() {
 
       console.log("Sending login request...");
 
-      const response = await fetch(`${API_URL}/api/login`, {
+      const response = await fetch("http://localhost:5000/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +49,6 @@ function Login() {
       // Store authentication data
       localStorage.setItem("authToken", data.token);
       localStorage.setItem("userRole", data.user.role);
-      localStorage.setItem("userId", data.user._id); 
       localStorage.setItem("userName", data.user.name);
       localStorage.setItem("userData", JSON.stringify(data.user));
 
@@ -166,9 +163,6 @@ function Login() {
           >
             {loading ? <Spinner /> : "Login"}
           </button>
-          <div className="chat-with-ai">
-  <Link to="/chatbot">Go to Chatbot</Link>
-</div>
         </form>
       </div>
     </div>

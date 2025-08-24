@@ -1,11 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { FaSearch, FaFileMedical, FaUserInjured, FaUserMd, FaPills, FaCalendarAlt, FaSort, FaSortUp, FaSortDown } from "react-icons/fa";
+import { FaSearch, FaFileMedical, FaUserInjured, FaUserMd, FaPills, FaCalendarAlt, FaSort, FaSortUp, FaSortDown, FaMoneyBillWave } from "react-icons/fa";
+
+// Debounce hook for search performance
+const useDebounce = (value, delay) => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+  
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+    
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+  
+  return debouncedValue;
+};
 
 const ViewPrescriptions = () => {
   const [prescriptions, setPrescriptions] = useState([]);
   const [originalPrescriptions, setOriginalPrescriptions] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
   const [isLoading, setIsLoading] = useState(true);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
   const [selectedPrescription, setSelectedPrescription] = useState(null);
@@ -14,7 +32,6 @@ const ViewPrescriptions = () => {
   const fetchPrescriptions = async () => {
     setIsLoading(true);
     try {
-      // Correct the endpoint to match your Flask backend
       const response = await axios.get("http://localhost:5000/view-prescriptions");
       setPrescriptions(response.data);
       setOriginalPrescriptions(response.data);
@@ -30,9 +47,8 @@ const ViewPrescriptions = () => {
   }, []);
 
   // Search with ordering matched first
-  const handleSearch = (e) => {
-    const value = e.target.value.toLowerCase();
-    setSearchTerm(value);
+  const handleSearch = useCallback(() => {
+    const value = debouncedSearchTerm.toLowerCase();
 
     if (!value) {
       setPrescriptions(originalPrescriptions);
@@ -43,12 +59,17 @@ const ViewPrescriptions = () => {
       String(item.prescriptionId || "").toLowerCase().includes(value) ||
       String(item.patientName || "").toLowerCase().includes(value) ||
       String(item.doctorName || "").toLowerCase().includes(value) ||
-      String(item.medicine || "").toLowerCase().includes(value)
+      String(item.medicine || "").toLowerCase().includes(value) ||
+      String(item.amount || "").toLowerCase().includes(value)
     );
 
     const nonMatched = originalPrescriptions.filter(item => !matched.includes(item));
     setPrescriptions([...matched, ...nonMatched]);
-  };
+  }, [debouncedSearchTerm, originalPrescriptions]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [handleSearch]);
 
   // Sort prescriptions
   const requestSort = (key) => {
@@ -59,10 +80,21 @@ const ViewPrescriptions = () => {
     setSortConfig({ key, direction });
 
     const sortedData = [...prescriptions].sort((a, b) => {
-      if (a[key] < b[key]) {
+      // Handle numeric sorting for amount and quantity
+      if (key === 'amount' || key === 'quantity') {
+        const aValue = parseFloat(a[key] ?? 0) || 0;
+        const bValue = parseFloat(b[key] ?? 0) || 0;
+        return direction === 'ascending' ? aValue - bValue : bValue - aValue;
+      }
+      
+      // Handle string sorting for other fields
+      const aValue = a[key] ?? "";
+      const bValue = b[key] ?? "";
+      
+      if (aValue < bValue) {
         return direction === 'ascending' ? -1 : 1;
       }
-      if (a[key] > b[key]) {
+      if (aValue > bValue) {
         return direction === 'ascending' ? 1 : -1;
       }
       return 0;
@@ -84,8 +116,51 @@ const ViewPrescriptions = () => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  // Format currency
+  const formatCurrency = (amount) => {
+    if (!amount) return "N/A";
+    return `$${parseFloat(amount).toFixed(2)}`;
+  };
+
+  // Print prescription details
+  const handlePrint = () => {
+    const printContent = document.getElementById('prescription-details').innerHTML;
+    const printWindow = window.open('', '', 'width=800,height=600');
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Prescription Details</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            .detail-row { display: flex; margin-bottom: 15px; }
+            .detail-label { font-weight: bold; width: 150px; }
+            h2 { color: #007bff; }
+          </style>
+        </head>
+        <body>
+          <h2>Prescription Details</h2>
+          ${printContent}
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  };
+
   return (
     <div style={styles.container}>
+      <style>
+        {`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+          .prescription-row:hover {
+            background-color: #f1f1f1;
+          }
+        `}
+      </style>
+      
       <div style={styles.header}>
         <h1 style={styles.title}>
           <FaFileMedical style={{ marginRight: '10px' }} />
@@ -100,9 +175,9 @@ const ViewPrescriptions = () => {
           <FaSearch style={styles.searchIcon} />
           <input
             type="text"
-            placeholder="Search by ID, Patient, Doctor, or Medicine..."
+            placeholder="Search by ID, Patient, Doctor, Medicine, or Amount..."
             value={searchTerm}
-            onChange={handleSearch}
+            onChange={(e) => setSearchTerm(e.target.value)}
             style={styles.searchInput}
           />
         </div>
@@ -111,6 +186,7 @@ const ViewPrescriptions = () => {
           style={styles.refreshButton}
           onClick={fetchPrescriptions}
           disabled={isLoading}
+          aria-label="Refresh prescription data"
         >
           {isLoading ? 'Refreshing...' : 'Refresh Data'}
         </button>
@@ -162,6 +238,12 @@ const ViewPrescriptions = () => {
                     Qty {getSortIcon('quantity')}
                   </div>
                 </th>
+                <th style={styles.tableHeader} onClick={() => requestSort('amount')}>
+                  <div style={styles.headerContent}>
+                    <FaMoneyBillWave style={{ marginRight: '5px' }} />
+                    Amount {getSortIcon('amount')}
+                  </div>
+                </th>
                 <th style={styles.tableHeader} onClick={() => requestSort('dateIssued')}>
                   <div style={styles.headerContent}>
                     <FaCalendarAlt style={{ marginRight: '5px' }} />
@@ -171,9 +253,9 @@ const ViewPrescriptions = () => {
               </tr>
             </thead>
             <tbody>
-              {prescriptions.map((item, index) => (
+              {prescriptions.map((item) => (
                 <tr 
-                  key={index} 
+                  key={item.prescriptionId || item._id} 
                   style={styles.tableRow}
                   onClick={() => setSelectedPrescription(item)}
                   className="prescription-row"
@@ -183,6 +265,7 @@ const ViewPrescriptions = () => {
                   <td style={styles.tableCell}>{item.doctorName}</td>
                   <td style={styles.tableCell}>{item.medicine}</td>
                   <td style={styles.tableCell}>{item.quantity || "N/A"}</td>
+                  <td style={styles.tableCell}>{formatCurrency(item.amount)}</td>
                   <td style={styles.tableCell}>{formatDate(item.dateIssued)}</td>
                 </tr>
               ))}
@@ -200,11 +283,12 @@ const ViewPrescriptions = () => {
               <button 
                 style={styles.closeButton}
                 onClick={() => setSelectedPrescription(null)}
+                aria-label="Close prescription details"
               >
                 &times;
               </button>
             </div>
-            <div style={styles.modalBody}>
+            <div style={styles.modalBody} id="prescription-details">
               <div style={styles.detailRow}>
                 <span style={styles.detailLabel}>Prescription ID:</span>
                 <span>{selectedPrescription.prescriptionId}</span>
@@ -226,15 +310,19 @@ const ViewPrescriptions = () => {
                 <span>{selectedPrescription.quantity || "N/A"}</span>
               </div>
               <div style={styles.detailRow}>
+                <span style={styles.detailLabel}>Amount:</span>
+                <span>{formatCurrency(selectedPrescription.amount)}</span>
+              </div>
+              <div style={styles.detailRow}>
                 <span style={styles.detailLabel}>Date Issued:</span>
                 <span>{formatDate(selectedPrescription.dateIssued)}</span>
               </div>
-              {/* Add more details as needed */}
             </div>
             <div style={styles.modalFooter}>
               <button 
                 style={styles.printButton}
-                onClick={() => window.print()}
+                onClick={handlePrint}
+                aria-label="Print prescription details"
               >
                 Print Prescription
               </button>
@@ -254,7 +342,7 @@ const styles = {
     background: "#f8f9fa",
     borderRadius: "10px",
     boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-    maxWidth: "1200px",
+    maxWidth: "1400px",
     margin: "20px auto",
   },
   header: {
@@ -312,6 +400,14 @@ const styles = {
     cursor: "pointer",
     fontSize: "14px",
     fontWeight: "500",
+    transition: "background-color 0.2s",
+    ':hover': {
+      backgroundColor: "#0056b3",
+    },
+    ':disabled': {
+      backgroundColor: "#6c757d",
+      cursor: "not-allowed",
+    },
   },
   tableWrapper: {
     overflowX: "auto",
@@ -329,6 +425,7 @@ const styles = {
     padding: "12px 15px",
     textAlign: "left",
     cursor: "pointer",
+    whiteSpace: "nowrap",
   },
   headerContent: {
     display: "flex",
@@ -337,6 +434,7 @@ const styles = {
   tableRow: {
     borderBottom: "1px solid #eee",
     cursor: "pointer",
+    transition: "background-color 0.2s",
   },
   tableCell: {
     padding: "12px 15px",
@@ -407,6 +505,17 @@ const styles = {
     color: "#fff",
     fontSize: "24px",
     cursor: "pointer",
+    padding: "0",
+    width: "30px",
+    height: "30px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "50%",
+    transition: "background-color 0.2s",
+    ':hover': {
+      backgroundColor: "rgba(255,255,255,0.2)",
+    },
   },
   modalBody: {
     padding: "20px",
@@ -435,6 +544,10 @@ const styles = {
     padding: "8px 16px",
     borderRadius: "4px",
     cursor: "pointer",
+    transition: "background-color 0.2s",
+    ':hover': {
+      backgroundColor: "#218838",
+    },
   },
 };
 

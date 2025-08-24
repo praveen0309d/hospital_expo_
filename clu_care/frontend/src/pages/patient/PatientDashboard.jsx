@@ -5,7 +5,6 @@ import Prescriptions from "../../components/patient/Prescriptions";
 import LabReports from "../../components/patient/LabReports";
 import AssignedDoctor from "../../components/patient/AssignedDoctor";
 import "./PatientDashboard.css";
-import API_URL from "../../services/api";
 
 const PatientDashboard = () => {
   const [patientData, setPatientData] = useState(null);
@@ -25,7 +24,7 @@ const PatientDashboard = () => {
     }
 
     try {
-      const res = await fetch(`${API_URL}/mypatient/${user.patientId}`, {
+      const res = await fetch(`http://127.0.0.1:5000/mypatient/${user.patientId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();

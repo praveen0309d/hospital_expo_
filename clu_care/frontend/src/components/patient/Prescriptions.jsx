@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import './Prescription.css'
-import API_URL from "../../services/api";
 const Prescriptions = () => {
   const [prescriptions, setPrescriptions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +18,7 @@ const Prescriptions = () => {
     const fetchPrescriptions = async () => {
       try {
         const res = await fetch(
-          `${API_URL}/mypatient/${user.patientId}/prescriptions`,
+          `http://127.0.0.1:5000/mypatient/${user.patientId}/prescriptions`,
           {
             method: "GET",
             headers: {

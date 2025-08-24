@@ -224,7 +224,7 @@ def login():
             'email': user.get('email') or user.get('contact', {}).get('email', ''),
             'role': actual_role,
             'name': user.get('name', 'User'),
-            '_id': str(user.get('_id', 'unknown'))
+            'id': str(user.get('_id', 'unknown'))
         }
         
         # Add additional fields for staff members

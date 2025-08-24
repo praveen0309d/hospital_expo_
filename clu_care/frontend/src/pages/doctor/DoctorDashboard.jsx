@@ -1,180 +1,95 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "./DoctorDashboard.css";
-import API_URL from "../../services/api";
+import React from "react";
+import DoctorOverviewCards from "../components/DoctorOverviewCards";
+import PatientList from "../components/PatientList";
+import AppointmentList from "../components/AppointmentList";
+import PrescriptionList from "../components/PrescriptionList";
+import Messages from "../components/Messages";
+import Notifications from "../components/Notifications";
+import Reports from "../components/Reports";
+import ScheduleCalendar from "../components/ScheduleCalendar";
 
-// Import tab components (you'll need to create these)
-import DoctorProfile from "../../components/doctor/DoctorProfile";
-import Appointments from "../../components/doctor/Appointments.jsx";
-import PatientReports from "../../components/doctor/PatientReports";
-import AddPrescription from "../../components/doctor/Prescriptions.jsx";
-// import OtherFeatures from "./OtherFeatures";
-
-function DoctorDashboard() {
-  const [doctor, setDoctor] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [activeTab, setActiveTab] = useState("profile");
-  const [notifications, setNotifications] = useState(3); // Example notification count
-
-  const doctorId = localStorage.getItem("userId");
-
-  useEffect(() => {
-    if (!doctorId) {
-      setError("Doctor ID not found. Please login again.");
-      setLoading(false);
-      return;
-    }
-
-    const fetchDoctor = async () => {
-      try {
-        const response = await axios.get(
-          `${API_URL}/api/staff/${doctorId}`
-        );
-        setDoctor(response.data);
-      } catch (err) {
-        console.error(err);
-        setError("Failed to fetch doctor data");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDoctor();
-  }, [doctorId]);
-
-  const handleToggleStatus = async () => {
-    if (!doctor) return;
-
-    const newStatus = doctor.status === "active" ? "inactive" : "active";
-
-    try {
-      await axios.put(
-        `${API_URL}/api/staff/${doctorId}/status`,
-        { status: newStatus },
-        { headers: { "Content-Type": "application/json" } }
-      );
-
-      setDoctor((prev) => ({ ...prev, status: newStatus }));
-    } catch (err) {
-      console.error("Failed to update status", err);
-      alert("Failed to update status");
-    }
+const DoctorDashboard = () => {
+  const dashboardData = {
+    stats: { patientsToday: 8, appointments: 12, pendingReports: 4 },
+    patients: [
+      { id: 1, name: "John Doe", age: 35, issue: "Fever" },
+      { id: 2, name: "Sarah Lee", age: 42, issue: "Diabetes" },
+    ],
+    appointments: [
+      { id: 1, patient: "John Doe", time: "10:00 AM", status: "Completed" },
+      { id: 2, patient: "Sarah Lee", time: "11:30 AM", status: "Pending" },
+    ],
+    prescriptions: [
+      { id: 1, patient: "John Doe", medicine: "Paracetamol", dosage: "500mg" },
+    ],
+    messages: [
+      { id: 1, from: "Admin", text: "Meeting at 2 PM" },
+      { id: 2, from: "Patient Sarah", text: "Need prescription refill" },
+    ],
+    notifications: [
+      "Lab report ready for Patient: John Doe",
+      "New appointment booked for tomorrow",
+    ],
+    reports: [
+      { id: 1, type: "Blood Test", patient: "Sarah Lee", status: "Pending" },
+    ],
   };
 
-
-
-  if (loading) return <div className="dashboard-loading">Loading doctor profile...</div>;
-  if (error) return <div className="dashboard-error">{error}</div>;
-  if (!doctor) return <div className="dashboard-error">No doctor data found</div>;
-
   return (
-    <div className="doctor-dashboard">
-      {/* Header Section */}
-      <header className="dashboard-header">
-        <div className="header-content">
-          <div className="welcome-section">
-            <h1>Welcome, Dr. {doctor.name}</h1>
-            <p className="welcome-message">Your patient care dashboard</p>
-          </div>
-          
-          <div className="header-actions">
-            <div className="status-toggle">
-              <span className={`status-indicator ${doctor.status}`}>
-                {doctor.status === "active" ? "🟢 Online" : "🔴 Offline"}
-              </span>
-              <label className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={doctor.status === "active"}
-                  onChange={handleToggleStatus}
-                />
-                <span className="toggle-slider"></span>
-              </label>
-            </div>
-            
+    <>
+      <DoctorOverviewCards stats={dashboardData.stats} />
+      <div className="dashboard-grid">
+        <div className="grid-item">
+          <div className="card">
+            <h2>My Patients</h2>
+            <PatientList patients={dashboardData.patients} />
           </div>
         </div>
-      </header>
 
-      <div className="dashboard-content">
-        {/* Sidebar Navigation */}
-        <nav className="dashboard-sidebar">
-          <div className="sidebar-header">
-            <div className="doctor-avatar">
-              {doctor.name ? doctor.name.charAt(0).toUpperCase() : 'D'}
-            </div>
-            <div className="doctor-info">
-              <h3>Dr. {doctor.name}</h3>
-              <p>{doctor.specialization}</p>
-              <p className="department">{doctor.department}</p>
-            </div>
+        <div className="grid-item">
+          <div className="card">
+            <h2>Appointments</h2>
+            <AppointmentList appointments={dashboardData.appointments} />
           </div>
+        </div>
 
-          <div className="sidebar-nav">
-            <button 
-              className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
-              onClick={() => setActiveTab("profile")}
-            >
-              <span className="nav-icon">👤</span>
-              Profile
-            </button>
-            
-            <button 
-              className={`nav-item ${activeTab === "appointments" ? "active" : ""}`}
-              onClick={() => setActiveTab("appointments")}
-            >
-              <span className="nav-icon">📅</span>
-              Appointments
-              <span className="nav-badge">5</span>
-            </button>
-            
-            <button 
-              className={`nav-item ${activeTab === "patientReports" ? "active" : ""}`}
-              onClick={() => setActiveTab("patientReports")}
-            >
-              <span className="nav-icon">📊</span>
-              Patient Reports
-            </button>
-            
-            <button 
-              className={`nav-item ${activeTab === "addPrescription" ? "active" : ""}`}
-              onClick={() => setActiveTab("addPrescription")}
-            >
-              <span className="nav-icon">💊</span>
-              Add Prescription
-            </button>
-            
-            {/* <button 
-              className={`nav-item ${activeTab === "others" ? "active" : ""}`}
-              onClick={() => setActiveTab("others")}
-            >
-              <span className="nav-icon">⚙️</span>
-              Settings
-            </button> */}
+        <div className="grid-item">
+          <div className="card">
+            <h2>Prescriptions</h2>
+            <PrescriptionList prescriptions={dashboardData.prescriptions} />
           </div>
+        </div>
 
-          <div className="sidebar-footer">
-            <div className="emergency-contact">
-              <p>Emergency Contact</p>
-              <strong>+1 (555) 123-HELP</strong>
-            </div>
+        <div className="grid-item">
+          <div className="card">
+            <h2>Messages</h2>
+            <Messages messages={dashboardData.messages} />
           </div>
-        </nav>
+        </div>
 
-        {/* Main Content Area */}
-        <main className="dashboard-main">
-          <div className="main-content">
-            {activeTab === "profile" && <DoctorProfile doctor={doctor} />}
-            {activeTab === "appointments" && <Appointments doctorId={doctorId} />}
-            {activeTab === "patientReports" && <PatientReports doctorId={doctorId} />}
-            {activeTab === "addPrescription" && <AddPrescription doctorId={doctorId} />}
-            {/* {activeTab === "others" && <OtherFeatures />} */}
+        <div className="grid-item">
+          <div className="card">
+            <h2>Notifications</h2>
+            <Notifications notifications={dashboardData.notifications} />
           </div>
-        </main>
+        </div>
+
+        <div className="grid-item">
+          <div className="card">
+            <h2>Reports</h2>
+            <Reports reports={dashboardData.reports} />
+          </div>
+        </div>
+
+        <div className="grid-item-full">
+          <div className="card">
+            <h2>My Schedule</h2>
+            <ScheduleCalendar appointments={dashboardData.appointments} />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
-}
+};
 
 export default DoctorDashboard;
