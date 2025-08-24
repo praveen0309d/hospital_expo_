@@ -5,6 +5,7 @@ import {
   FaIndustry, FaMoneyBillWave, FaBoxes, FaCalendarAlt, FaSort, 
   FaSortUp, FaSortDown, FaExclamationTriangle
 } from "react-icons/fa";
+import "./ManageStock.css";
 
 const ManageStock = () => {
   const [stock, setStock] = useState([]);
@@ -30,7 +31,7 @@ const ManageStock = () => {
   const fetchStock = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get("http://localhost:5000/manage-stock");
+      const response = await axios.get("http://localhost:5000/appointments/manage-stock");
       setStock(response.data);
       setOriginalStock(response.data);
       checkLowStock(response.data);
@@ -64,7 +65,7 @@ const ManageStock = () => {
   // Add new stock
   const handleAdd = async () => {
     try {
-      await axios.post("http://localhost:5000/manage-stock", formData);
+      await axios.post("http://localhost:5000/appointments/manage-stock", formData);
       await fetchStock();
       resetForm();
     } catch (error) {
@@ -75,7 +76,7 @@ const ManageStock = () => {
   // Update stock
   const handleUpdate = async () => {
     try {
-      await axios.put("http://localhost:5000/manage-stock", formData);
+      await axios.put("http://localhost:5000/appointments/manage-stock", formData);
       await fetchStock();
       resetForm();
     } catch (error) {
@@ -87,7 +88,7 @@ const ManageStock = () => {
   const handleDelete = async (medicineId) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
       try {
-        await axios.delete(`http://localhost:5000/manage-stock?medicineId=${medicineId}`);
+        await axios.delete(`http://localhost:5000/appointments/manage-stock?medicineId=${medicineId}`);
         await fetchStock();
       } catch (error) {
         console.error("Error deleting stock:", error);
@@ -103,7 +104,7 @@ const ManageStock = () => {
     }
 
     try {
-      const response = await axios.put("http://localhost:5000/manage-stock", {
+      const response = await axios.put("http://localhost:5000/appointments/manage-stock", {
         medicineId: parseInt(medicineId),
         reduceQuantity: parseInt(reduceQty[medicineId])
       });
@@ -218,155 +219,156 @@ const ManageStock = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.header}>
-        <h1 style={styles.title}>
-          <FaBox style={{ marginRight: '10px' }} />
+    <div className="manage-stock-container">
+      <div className="manage-stock-header">
+        <h1 className="manage-stock-title">
+          <FaBox className="title-icon" />
           Pharmacy Inventory Management
         </h1>
-        <p style={styles.subtitle}>Manage and track your medical inventory</p>
+        <p className="manage-stock-subtitle">Manage and track your medical inventory</p>
       </div>
 
       {/* Low Stock Alert */}
       {lowStockItems.length > 0 && (
-        <div style={styles.alert}>
+        <div className="low-stock-alert">
+          <FaExclamationTriangle className="alert-icon" />
           <strong>Low Stock Alert:</strong> {lowStockItems.length} item{lowStockItems.length !== 1 ? 's' : ''} below minimum threshold
         </div>
       )}
 
       {/* Search and Actions */}
-      <div style={styles.searchActionContainer}>
-        <div style={styles.searchBox}>
-          <FaSearch style={styles.searchIcon} />
+      <div className="search-action-container">
+        <div className="search-box">
+          <FaSearch className="search-icon" />
           <input
             type="text"
             placeholder="Search by ID, Name, Type, Manufacturer..."
             value={searchTerm}
             onChange={handleSearch}
-            style={styles.searchInput}
+            className="search-input"
           />
         </div>
         <button 
-          style={styles.refreshButton}
+          className="refresh-button"
           onClick={fetchStock}
           disabled={isLoading}
         >
-          <FaRedo style={{ marginRight: '5px' }} />
+          <FaRedo className="button-icon" />
           {isLoading ? 'Refreshing...' : 'Refresh'}
         </button>
       </div>
 
       {/* Inventory Form */}
-      <div style={styles.formContainer}>
-        <h3 style={styles.formTitle}>
+      <div className="inventory-form-container">
+        <h3 className="form-title">
           {isEditing ? 'Edit Inventory Item' : 'Add New Inventory Item'}
         </h3>
-        <div style={styles.formGrid}>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Medicine ID</label>
+        <div className="form-grid">
+          <div className="form-group">
+            <label className="form-label">Medicine ID</label>
             <input
               type="text"
               name="medicineId"
               value={formData.medicineId}
               onChange={handleChange}
-              style={styles.input}
+              className="form-input"
               placeholder="MED-001"
             />
           </div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Name</label>
+          <div className="form-group">
+            <label className="form-label">Name</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              style={styles.input}
+              className="form-input"
               placeholder="Medicine Name"
             />
           </div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>SKU</label>
+          <div className="form-group">
+            <label className="form-label">SKU</label>
             <input
               type="text"
               name="sku"
               value={formData.sku}
               onChange={handleChange}
-              style={styles.input}
+              className="form-input"
               placeholder="SKU-001"
             />
           </div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Type</label>
+          <div className="form-group">
+            <label className="form-label">Type</label>
             <input
               type="text"
               name="type"
               value={formData.type}
               onChange={handleChange}
-              style={styles.input}
+              className="form-input"
               placeholder="Tablet/Syringe/etc"
             />
           </div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Manufacturer</label>
+          <div className="form-group">
+            <label className="form-label">Manufacturer</label>
             <input
               type="text"
               name="manufacturer"
               value={formData.manufacturer}
               onChange={handleChange}
-              style={styles.input}
+              className="form-input"
               placeholder="Manufacturer Name"
             />
           </div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Price ($)</label>
+          <div className="form-group">
+            <label className="form-label">Price ($)</label>
             <input
               type="number"
               name="price"
               value={formData.price}
               onChange={handleChange}
-              style={styles.input}
+              className="form-input"
               placeholder="0.00"
               min="0"
               step="0.01"
             />
           </div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Quantity</label>
+          <div className="form-group">
+            <label className="form-label">Quantity</label>
             <input
               type="number"
               name="quantity"
               value={formData.quantity}
               onChange={handleChange}
-              style={styles.input}
+              className="form-input"
               placeholder="0"
               min="0"
             />
           </div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Expiry Date</label>
+          <div className="form-group">
+            <label className="form-label">Expiry Date</label>
             <input
               type="date"
               name="expiryDate"
               value={formData.expiryDate}
               onChange={handleChange}
-              style={styles.input}
+              className="form-input"
             />
           </div>
         </div>
-        <div style={styles.formButtons}>
+        <div className="form-buttons">
           {isEditing ? (
             <>
-              <button style={styles.updateButton} onClick={handleUpdate}>
-                <FaEdit style={{ marginRight: '5px' }} />
+              <button className="update-button" onClick={handleUpdate}>
+                <FaEdit className="button-icon" />
                 Update Item
               </button>
-              <button style={styles.cancelButton} onClick={resetForm}>
+              <button className="cancel-button" onClick={resetForm}>
                 Cancel
               </button>
             </>
           ) : (
-            <button style={styles.addButton} onClick={handleAdd}>
-              <FaPlus style={{ marginRight: '5px' }} />
+            <button className="add-button" onClick={handleAdd}>
+              <FaPlus className="button-icon" />
               Add New Item
             </button>
           )}
@@ -375,68 +377,68 @@ const ManageStock = () => {
 
       {/* Inventory Table */}
       {isLoading ? (
-        <div style={styles.loadingContainer}>
-          <div style={styles.loadingSpinner}></div>
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
           <p>Loading inventory data...</p>
         </div>
       ) : stock.length === 0 ? (
-        <div style={styles.emptyState}>
-          <FaBox size={48} style={{ color: '#6c757d', marginBottom: '15px' }} />
+        <div className="empty-state">
+          <FaBox size={48} className="empty-icon" />
           <h3>No Inventory Items Found</h3>
           <p>There are currently no items in your inventory.</p>
         </div>
       ) : (
-        <div style={styles.tableWrapper}>
-          <table style={styles.table}>
+        <div className="table-wrapper">
+          <table className="inventory-table">
             <thead>
               <tr>
-                <th style={styles.tableHeader} onClick={() => requestSort('medicineId')}>
-                  <div style={styles.headerContent}>
-                    <FaBox style={{ marginRight: '5px' }} />
+                <th className="table-header" onClick={() => requestSort('medicineId')}>
+                  <div className="header-content">
+                    <FaBox className="header-icon" />
                     ID {getSortIcon('medicineId')}
                   </div>
                 </th>
-                <th style={styles.tableHeader} onClick={() => requestSort('name')}>
-                  <div style={styles.headerContent}>
+                <th className="table-header" onClick={() => requestSort('name')}>
+                  <div className="header-content">
                     Name {getSortIcon('name')}
                   </div>
                 </th>
-                <th style={styles.tableHeader} onClick={() => requestSort('sku')}>
-                  <div style={styles.headerContent}>
-                    <FaTag style={{ marginRight: '5px' }} />
+                <th className="table-header" onClick={() => requestSort('sku')}>
+                  <div className="header-content">
+                    <FaTag className="header-icon" />
                     SKU {getSortIcon('sku')}
                   </div>
                 </th>
-                <th style={styles.tableHeader} onClick={() => requestSort('type')}>
-                  <div style={styles.headerContent}>
+                <th className="table-header" onClick={() => requestSort('type')}>
+                  <div className="header-content">
                     Type {getSortIcon('type')}
                   </div>
                 </th>
-                <th style={styles.tableHeader} onClick={() => requestSort('manufacturer')}>
-                  <div style={styles.headerContent}>
-                    <FaIndustry style={{ marginRight: '5px' }} />
+                <th className="table-header" onClick={() => requestSort('manufacturer')}>
+                  <div className="header-content">
+                    <FaIndustry className="header-icon" />
                     Manufacturer {getSortIcon('manufacturer')}
                   </div>
                 </th>
-                <th style={styles.tableHeader} onClick={() => requestSort('price')}>
-                  <div style={styles.headerContent}>
-                    <FaMoneyBillWave style={{ marginRight: '5px' }} />
+                <th className="table-header" onClick={() => requestSort('price')}>
+                  <div className="header-content">
+                    <FaMoneyBillWave className="header-icon" />
                     Price {getSortIcon('price')}
                   </div>
                 </th>
-                <th style={styles.tableHeader} onClick={() => requestSort('quantity')}>
-                  <div style={styles.headerContent}>
-                    <FaBoxes style={{ marginRight: '5px' }} />
+                <th className="table-header" onClick={() => requestSort('quantity')}>
+                  <div className="header-content">
+                    <FaBoxes className="header-icon" />
                     Qty {getSortIcon('quantity')}
                   </div>
                 </th>
-                <th style={styles.tableHeader} onClick={() => requestSort('expiryDate')}>
-                  <div style={styles.headerContent}>
-                    <FaCalendarAlt style={{ marginRight: '5px' }} />
+                <th className="table-header" onClick={() => requestSort('expiryDate')}>
+                  <div className="header-content">
+                    <FaCalendarAlt className="header-icon" />
                     Expiry {getSortIcon('expiryDate')}
                   </div>
                 </th>
-                <th style={styles.tableHeader}>
+                <th className="table-header">
                   Actions
                 </th>
               </tr>
@@ -445,39 +447,23 @@ const ManageStock = () => {
               {stock.map((item, index) => (
                 <tr 
                   key={index} 
-                  style={{
-                    ...styles.tableRow,
-                    backgroundColor: item.quantity < 5 ? '#fff8f8' : 
-                                     item.quantity < 10 ? '#fffaf2' : 'white',
-                    borderLeft: item.quantity < 5 ? '4px solid #ff6b6b' : 
-                                   item.quantity < 10 ? '4px solid #ffd43b' : '4px solid transparent'
-                  }}
-                  className="inventory-row"
+                  className={`inventory-row ${item.quantity < 5 ? 'critical-stock' : item.quantity < 10 ? 'low-stock' : ''}`}
                 >
-                  <td style={styles.tableCell}>{item.medicineId}</td>
-                  <td style={styles.tableCell}>{item.name}</td>
-                  <td style={styles.tableCell}>{item.sku}</td>
-                  <td style={styles.tableCell}>{item.type}</td>
-                  <td style={styles.tableCell}>{item.manufacturer}</td>
-                  <td style={styles.tableCell}>${parseFloat(item.price).toFixed(2)}</td>
-                  <td style={{
-                    ...styles.tableCell,
-                    color: item.quantity < 5 ? '#ff6b6b' : 
-                          item.quantity < 10 ? '#f08c00' : 'inherit',
-                    fontWeight: item.quantity < 10 ? 'bold' : 'normal'
-                  }}>
+                  <td className="table-cell">{item.medicineId}</td>
+                  <td className="table-cell">{item.name}</td>
+                  <td className="table-cell">{item.sku}</td>
+                  <td className="table-cell">{item.type}</td>
+                  <td className="table-cell">{item.manufacturer}</td>
+                  <td className="table-cell">₹{parseFloat(item.price).toFixed(2)}</td>
+                  <td className={`table-cell ${item.quantity < 5 ? 'critical-quantity' : item.quantity < 10 ? 'low-quantity' : ''}`}>
                     {item.quantity}
                   </td>
-                  <td style={{
-                    ...styles.tableCell,
-                    color: isExpiringSoon(item.expiryDate) ? '#ff6b6b' : 'inherit',
-                    fontWeight: isExpiringSoon(item.expiryDate) ? 'bold' : 'normal'
-                  }}>
+                  <td className={`table-cell ${isExpiringSoon(item.expiryDate) ? 'expiring-soon' : ''}`}>
                     {formatDate(item.expiryDate)}
                   </td>
-                  <td style={styles.tableCell}>
-                    <div className="flex flex-col space-y-2">
-                      <div className="flex space-x-2">
+                  <td className="table-cell">
+                    <div className="action-container">
+                      <div className="reduce-quantity-group">
                         <input
                           type="number"
                           value={reduceQty[item.medicineId] || ""}
@@ -488,27 +474,27 @@ const ManageStock = () => {
                             })
                           }
                           placeholder="Reduce Qty"
-                          className="w-20 p-1 border rounded text-sm"
+                          className="reduce-input"
                           min="1"
                           max={item.quantity}
                         />
                         <button
                           onClick={() => handleReduceQuantity(item.medicineId)}
-                          className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded text-xs"
+                          className="reduce-button"
                         >
                           Reduce
                         </button>
                       </div>
-                      <div className="flex space-x-2">
+                      <div className="action-buttons">
                         <button
                           onClick={() => handleEdit(item)}
-                          style={styles.editButton}
+                          className="edit-button"
                         >
                           <FaEdit />
                         </button>
                         <button
                           onClick={() => handleDelete(item.medicineId)}
-                          style={styles.deleteButton}
+                          className="delete-button"
                         >
                           <FaTrash />
                         </button>
@@ -524,285 +510,5 @@ const ManageStock = () => {
     </div>
   );
 };
-
-// Styles (same as before)
-const styles = {
-  container: {
-    padding: "25px",
-    fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-    background: "#f8f9fa",
-    borderRadius: "10px",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-    maxWidth: "1400px",
-    margin: "20px auto",
-  },
-  header: {
-    marginBottom: "25px",
-    textAlign: "center",
-  },
-  title: {
-    color: "#2c3e50",
-    marginBottom: "5px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: "28px",
-  },
-  subtitle: {
-    color: "#7f8c8d",
-    fontSize: "16px",
-  },
-  alert: {
-    backgroundColor: '#fff3bf',
-    color: '#5c3c00',
-    padding: '10px 15px',
-    borderRadius: '5px',
-    marginBottom: '20px',
-    borderLeft: '4px solid #ffd43b',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  searchActionContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "20px",
-    flexWrap: "wrap",
-    gap: "15px",
-  },
-  searchBox: {
-    display: "flex",
-    alignItems: "center",
-    background: "#fff",
-    padding: "10px 15px",
-    borderRadius: "30px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-    flex: "1",
-    minWidth: "300px",
-    transition: "all 0.3s ease",
-  },
-  searchIcon: {
-    color: "#6c757d",
-    marginRight: "10px",
-    fontSize: "16px",
-  },
-  searchInput: {
-    border: "none",
-    outline: "none",
-    flex: "1",
-    fontSize: "14px",
-    background: "transparent",
-  },
-  refreshButton: {
-    background: "#007bff",
-    color: "#fff",
-    border: "none",
-    padding: "10px 20px",
-    borderRadius: "30px",
-    cursor: "pointer",
-    fontSize: "14px",
-    fontWeight: "500",
-    transition: "all 0.3s ease",
-    display: "flex",
-    alignItems: "center",
-    boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-  },
-  formContainer: {
-    backgroundColor: '#fff',
-    borderRadius: '8px',
-    padding: '20px',
-    marginBottom: '25px',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  },
-  formTitle: {
-    color: '#2c3e50',
-    marginBottom: '20px',
-    paddingBottom: '10px',
-    borderBottom: '1px solid #eee',
-  },
-  formGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-    gap: '15px',
-    marginBottom: '20px',
-  },
-  formGroup: {
-    marginBottom: '5px',
-  },
-  label: {
-    display: 'block',
-    marginBottom: '5px',
-    color: '#495057',
-    fontSize: '14px',
-    fontWeight: '500',
-  },
-  input: {
-    width: '100%',
-    padding: '10px',
-    borderRadius: '5px',
-    border: '1px solid #ddd',
-    fontSize: '14px',
-    transition: 'all 0.2s ease',
-  },
-  formButtons: {
-    display: 'flex',
-    gap: '10px',
-  },
-  addButton: {
-    background: '#28a745',
-    color: '#fff',
-    border: 'none',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontSize: '14px',
-    fontWeight: '500',
-    display: 'flex',
-    alignItems: 'center',
-    transition: 'all 0.2s ease',
-  },
-  updateButton: {
-    background: '#17a2b8',
-    color: '#fff',
-    border: 'none',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontSize: '14px',
-    fontWeight: '500',
-    display: 'flex',
-    alignItems: 'center',
-    transition: 'all 0.2s ease',
-  },
-  cancelButton: {
-    background: '#6c757d',
-    color: '#fff',
-    border: 'none',
-    padding: '10px 20px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    fontSize: '14px',
-    fontWeight: '500',
-    transition: 'all 0.2s ease',
-  },
-  tableWrapper: {
-    overflowX: "auto",
-    borderRadius: "8px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-    background: "#fff",
-  },
-  table: {
-    width: "100%",
-    borderCollapse: "collapse",
-  },
-  tableHeader: {
-    background: "#007bff",
-    color: "#fff",
-    padding: "12px 15px",
-    textAlign: "left",
-    cursor: "pointer",
-    transition: "background 0.2s ease",
-    position: "sticky",
-    top: "0",
-  },
-  headerContent: {
-    display: "flex",
-    alignItems: "center",
-  },
-  tableRow: {
-    transition: "all 0.2s ease",
-    borderBottom: "1px solid #eee",
-  },
-  tableCell: {
-    padding: "12px 15px",
-    color: "#495057",
-  },
-  editButton: {
-    background: '#ffc107',
-    color: '#212529',
-    border: 'none',
-    padding: '8px 12px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    marginRight: '5px',
-    transition: 'all 0.2s ease',
-  },
-  deleteButton: {
-    background: '#dc3545',
-    color: '#fff',
-    border: 'none',
-    padding: '8px 12px',
-    borderRadius: '5px',
-    cursor: 'pointer',
-    transition: 'all 0.2s ease',
-  },
-  loadingContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "40px",
-    background: "#fff",
-    borderRadius: "8px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-  },
-  loadingSpinner: {
-    border: "4px solid #f3f3f3",
-    borderTop: "4px solid #007bff",
-    borderRadius: "50%",
-    width: "40px",
-    height: "40px",
-    animation: "spin 1s linear infinite",
-    marginBottom: "15px",
-  },
-  emptyState: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "40px",
-    background: "#fff",
-    borderRadius: "8px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-    textAlign: "center",
-    color: "#6c757d",
-  },
-};
-
-// Add CSS animations
-const cssStyles = `
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  .inventory-row:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-
-  th:hover {
-    background: #0069d9 !important;
-  }
-
-  input:focus {
-    border-color: #007bff !important;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-  }
-
-  button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  }
-
-  button:active {
-    transform: translateY(0);
-  }
-`;
-
-// Inject styles
-const styleElement = document.createElement('style');
-styleElement.innerHTML = cssStyles;
-document.head.appendChild(styleElement);
 
 export default ManageStock;

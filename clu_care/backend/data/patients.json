@@ -1,0 +1,522 @@
+[
+  {
+    "_id": "68a31ac5a5f31cd9508b636c",
+    "patientId": "P-68a31ac5",
+    "name": "praveen",
+    "age": "18",
+    "gender": "male",
+    "bloodGroup": "A+",
+    "type": "OPD",
+    "medicalSpecialty": "Cardiology",
+    "description": "www",
+    "password": "12334",
+    "contact": {
+      "phone": "9876543210",
+      "email": "praveen@example.com"
+    },
+    "insurance": {
+      "provider": "LIC",
+      "policyNumber": "LIC12345"
+    },
+    "status": "registered",
+    "admissionDate": null,
+    "assignedDoctor": "Dr. Kumar",
+    "wardNumber": "3",
+    "cartNumber": "1",
+    "checkupDates": ["10-11-2023", "10-12-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b636d",
+    "patientId": "P-68a31ac6",
+    "name": "sanjay",
+    "age": "25",
+    "gender": "male",
+    "bloodGroup": "B+",
+    "type": "IPD",
+    "medicalSpecialty": "Neurology",
+    "description": "Headache and dizziness",
+    "password": "pass123",
+    "contact": {
+      "phone": "9876543211",
+      "email": "sanjay@example.com"
+    },
+    "insurance": {
+      "provider": "Star Health",
+      "policyNumber": "STAR67890"
+    },
+    "status": "admitted",
+    "admissionDate": "2023-11-15",
+    "assignedDoctor": "Dr. Sharma",
+    "wardNumber": "5",
+    "cartNumber": "2",
+    "checkupDates": ["11-15-2023", "11-16-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b636e",
+    "patientId": "P-68a31ac7",
+    "name": "priya",
+    "age": "32",
+    "gender": "female",
+    "bloodGroup": "O+",
+    "type": "OPD",
+    "medicalSpecialty": "Dermatology",
+    "description": "Skin allergy",
+    "password": "priya456",
+    "contact": {
+      "phone": "9876543212",
+      "email": "priya@example.com"
+    },
+    "insurance": {
+      "provider": "HDFC Ergo",
+      "policyNumber": "HDFC54321"
+    },
+    "status": "registered",
+    "admissionDate": null,
+    "assignedDoctor": "Dr. Patel",
+    "wardNumber": null,
+    "cartNumber": "3",
+    "checkupDates": ["11-10-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b636f",
+    "patientId": "P-68a31ac8",
+    "name": "rahul",
+    "age": "45",
+    "gender": "male",
+    "bloodGroup": "AB+",
+    "type": "IPD",
+    "medicalSpecialty": "Orthopedics",
+    "description": "Fractured arm",
+    "password": "rahul789",
+    "contact": {
+      "phone": "9876543213",
+      "email": "rahul@example.com"
+    },
+    "insurance": {
+      "provider": "ICICI Lombard",
+      "policyNumber": "ICICI98765"
+    },
+    "status": "admitted",
+    "admissionDate": "2023-11-12",
+    "assignedDoctor": "Dr. Singh",
+    "wardNumber": "7",
+    "cartNumber": "4",
+    "checkupDates": ["11-12-2023", "11-14-2023", "11-16-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b6370",
+    "patientId": "P-68a31ac9",
+    "name": "meera",
+    "age": "28",
+    "gender": "female",
+    "bloodGroup": "A-",
+    "type": "OPD",
+    "medicalSpecialty": "Gynecology",
+    "description": "Routine checkup",
+    "password": "meera101",
+    "contact": {
+      "phone": "9876543214",
+      "email": "meera@example.com"
+    },
+    "insurance": {
+      "provider": "Max Bupa",
+      "policyNumber": "MAX24680"
+    },
+    "status": "registered",
+    "admissionDate": null,
+    "assignedDoctor": "Dr. Gupta",
+    "wardNumber": null,
+    "cartNumber": "5",
+    "checkupDates": ["11-08-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b6371",
+    "patientId": "P-68a31aca",
+    "name": "vikram",
+    "age": "60",
+    "gender": "male",
+    "bloodGroup": "O-",
+    "type": "IPD",
+    "medicalSpecialty": "Cardiology",
+    "description": "Heart condition",
+    "password": "vikram202",
+    "contact": {
+      "phone": "9876543215",
+      "email": "vikram@example.com"
+    },
+    "insurance": {
+      "provider": "LIC",
+      "policyNumber": "LIC13579"
+    },
+    "status": "admitted",
+    "admissionDate": "2023-11-05",
+    "assignedDoctor": "Dr. Kumar",
+    "wardNumber": "3",
+    "cartNumber": "6",
+    "checkupDates": ["11-05-2023", "11-07-2023", "11-10-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b6372",
+    "patientId": "P-68a31acb",
+    "name": "ananya",
+    "age": "22",
+    "gender": "female",
+    "bloodGroup": "B+",
+    "type": "OPD",
+    "medicalSpecialty": "Dentistry",
+    "description": "Dental cleaning",
+    "password": "ananya303",
+    "contact": {
+      "phone": "9876543216",
+      "email": "ananya@example.com"
+    },
+    "insurance": {
+      "provider": "Star Health",
+      "policyNumber": "STAR11223"
+    },
+    "status": "registered",
+    "admissionDate": null,
+    "assignedDoctor": "Dr. Joshi",
+    "wardNumber": null,
+    "cartNumber": "7",
+    "checkupDates": ["11-09-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b6373",
+    "patientId": "P-68a31acc",
+    "name": "karthik",
+    "age": "35",
+    "gender": "male",
+    "bloodGroup": "A+",
+    "type": "IPD",
+    "medicalSpecialty": "Surgery",
+    "description": "Appendectomy",
+    "password": "karthik404",
+    "contact": {
+      "phone": "9876543217",
+      "email": "karthik@example.com"
+    },
+    "insurance": {
+      "provider": "HDFC Ergo",
+      "policyNumber": "HDFC33445"
+    },
+    "status": "admitted",
+    "admissionDate": "2023-11-14",
+    "assignedDoctor": "Dr. Reddy",
+    "wardNumber": "9",
+    "cartNumber": "8",
+    "checkupDates": ["11-14-2023", "11-15-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b6374",
+    "patientId": "P-68a31acd",
+    "name": "divya",
+    "age": "29",
+    "gender": "female",
+    "bloodGroup": "AB-",
+    "type": "OPD",
+    "medicalSpecialty": "Pediatrics",
+    "description": "Child vaccination",
+    "password": "divya505",
+    "contact": {
+      "phone": "9876543218",
+      "email": "divya@example.com"
+    },
+    "insurance": {
+      "provider": "ICICI Lombard",
+      "policyNumber": "ICICI55667"
+    },
+    "status": "registered",
+    "admissionDate": null,
+    "assignedDoctor": "Dr. Mehta",
+    "wardNumber": null,
+    "cartNumber": "9",
+    "checkupDates": ["11-11-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b6375",
+    "patientId": "P-68a31ace",
+    "name": "mohan",
+    "age": "50",
+    "gender": "male",
+    "bloodGroup": "B-",
+    "type": "IPD",
+    "medicalSpecialty": "Oncology",
+    "description": "Chemotherapy",
+    "password": "mohan606",
+    "contact": {
+      "phone": "9876543219",
+      "email": "mohan@example.com"
+    },
+    "insurance": {
+      "provider": "Max Bupa",
+      "policyNumber": "MAX77889"
+    },
+    "status": "admitted",
+    "admissionDate": "2023-11-03",
+    "assignedDoctor": "Dr. Kapoor",
+    "wardNumber": "11",
+    "cartNumber": "10",
+    "checkupDates": ["11-03-2023", "11-06-2023", "11-10-2023", "11-13-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b6376",
+    "patientId": "P-68a31acf",
+    "name": "sneha",
+    "age": "27",
+    "gender": "female",
+    "bloodGroup": "O+",
+    "type": "OPD",
+    "medicalSpecialty": "Ophthalmology",
+    "description": "Eye checkup",
+    "password": "sneha707",
+    "contact": {
+      "phone": "9876543220",
+      "email": "sneha@example.com"
+    },
+    "insurance": {
+      "provider": "LIC",
+      "policyNumber": "LIC99001"
+    },
+    "status": "registered",
+    "admissionDate": null,
+    "assignedDoctor": "Dr. Malhotra",
+    "wardNumber": null,
+    "cartNumber": "11",
+    "checkupDates": ["11-07-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b6377",
+    "patientId": "P-68a31ad0",
+    "name": "arjun",
+    "age": "40",
+    "gender": "male",
+    "bloodGroup": "A+",
+    "type": "IPD",
+    "medicalSpecialty": "Cardiology",
+    "description": "Angioplasty",
+    "password": "arjun808",
+    "contact": {
+      "phone": "9876543221",
+      "email": "arjun@example.com"
+    },
+    "insurance": {
+      "provider": "Star Health",
+      "policyNumber": "STAR22334"
+    },
+    "status": "admitted",
+    "admissionDate": "2023-11-09",
+    "assignedDoctor": "Dr. Kumar",
+    "wardNumber": "3",
+    "cartNumber": "12",
+    "checkupDates": ["11-09-2023", "11-11-2023", "11-13-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b6378",
+    "patientId": "P-68a31ad1",
+    "name": "nandini",
+    "age": "31",
+    "gender": "female",
+    "bloodGroup": "B+",
+    "type": "OPD",
+    "medicalSpecialty": "Endocrinology",
+    "description": "Thyroid issue",
+    "password": "nandini909",
+    "contact": {
+      "phone": "9876543222",
+      "email": "nandini@example.com"
+    },
+    "insurance": {
+      "provider": "HDFC Ergo",
+      "policyNumber": "HDFC44556"
+    },
+    "status": "registered",
+    "admissionDate": null,
+    "assignedDoctor": "Dr. Sharma",
+    "wardNumber": null,
+    "cartNumber": "13",
+    "checkupDates": ["11-12-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b6379",
+    "patientId": "P-68a31ad2",
+    "name": "suresh",
+    "age": "55",
+    "gender": "male",
+    "bloodGroup": "O-",
+    "type": "IPD",
+    "medicalSpecialty": "Nephrology",
+    "description": "Kidney dialysis",
+    "password": "suresh010",
+    "contact": {
+      "phone": "9876543223",
+      "email": "suresh@example.com"
+    },
+    "insurance": {
+      "provider": "ICICI Lombard",
+      "policyNumber": "ICICI66778"
+    },
+    "status": "admitted",
+    "admissionDate": "2023-11-06",
+    "assignedDoctor": "Dr. Patel",
+    "wardNumber": "15",
+    "cartNumber": "14",
+    "checkupDates": ["11-06-2023", "11-08-2023", "11-11-2023", "11-14-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b637a",
+    "patientId": "P-68a31ad3",
+    "name": "latha",
+    "age": "38",
+    "gender": "female",
+    "bloodGroup": "A-",
+    "type": "OPD",
+    "medicalSpecialty": "Psychiatry",
+    "description": "Counseling session",
+    "password": "latha111",
+    "contact": {
+      "phone": "9876543224",
+      "email": "latha@example.com"
+    },
+    "insurance": {
+      "provider": "Max Bupa",
+      "policyNumber": "MAX88990"
+    },
+    "status": "registered",
+    "admissionDate": null,
+    "assignedDoctor": "Dr. Singh",
+    "wardNumber": null,
+    "cartNumber": "15",
+    "checkupDates": ["11-13-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b637b",
+    "patientId": "P-68a31ad4",
+    "name": "ganesh",
+    "age": "48",
+    "gender": "male",
+    "bloodGroup": "AB+",
+    "type": "IPD",
+    "medicalSpecialty": "Gastroenterology",
+    "description": "Endoscopy",
+    "password": "ganesh222",
+    "contact": {
+      "phone": "9876543225",
+      "email": "ganesh@example.com"
+    },
+    "insurance": {
+      "provider": "LIC",
+      "policyNumber": "LIC00112"
+    },
+    "status": "admitted",
+    "admissionDate": "2023-11-16",
+    "assignedDoctor": "Dr. Gupta",
+    "wardNumber": "17",
+    "cartNumber": "16",
+    "checkupDates": ["11-16-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b637c",
+    "patientId": "P-68a31ad5",
+    "name": "pooja",
+    "age": "26",
+    "gender": "female",
+    "bloodGroup": "O+",
+    "type": "OPD",
+    "medicalSpecialty": "ENT",
+    "description": "Ear infection",
+    "password": "pooja333",
+    "contact": {
+      "phone": "9876543226",
+      "email": "pooja@example.com"
+    },
+    "insurance": {
+      "provider": "Star Health",
+      "policyNumber": "STAR33445"
+    },
+    "status": "registered",
+    "admissionDate": null,
+    "assignedDoctor": "Dr. Reddy",
+    "wardNumber": null,
+    "cartNumber": "17",
+    "checkupDates": ["11-14-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b637d",
+    "patientId": "P-68a31ad6",
+    "name": "rajesh",
+    "age": "42",
+    "gender": "male",
+    "bloodGroup": "B+",
+    "type": "IPD",
+    "medicalSpecialty": "Pulmonology",
+    "description": "Asthma treatment",
+    "password": "rajesh444",
+    "contact": {
+      "phone": "9876543227",
+      "email": "rajesh@example.com"
+    },
+    "insurance": {
+      "provider": "HDFC Ergo",
+      "policyNumber": "HDFC55667"
+    },
+    "status": "admitted",
+    "admissionDate": "2023-11-11",
+    "assignedDoctor": "Dr. Mehta",
+    "wardNumber": "19",
+    "cartNumber": "18",
+    "checkupDates": ["11-11-2023", "11-13-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b637e",
+    "patientId": "P-68a31ad7",
+    "name": "deepa",
+    "age": "33",
+    "gender": "female",
+    "bloodGroup": "A+",
+    "type": "OPD",
+    "medicalSpecialty": "Rheumatology",
+    "description": "Joint pain",
+    "password": "deepa555",
+    "contact": {
+      "phone": "9876543228",
+      "email": "deepa@example.com"
+    },
+    "insurance": {
+      "provider": "ICICI Lombard",
+      "policyNumber": "ICICI77889"
+    },
+    "status": "registered",
+    "admissionDate": null,
+    "assignedDoctor": "Dr. Kapoor",
+    "wardNumber": null,
+    "cartNumber": "19",
+    "checkupDates": ["11-15-2023"]
+  },
+  {
+    "_id": "68a31ac5a5f31cd9508b637f",
+    "patientId": "P-68a31ad8",
+    "name": "manoj",
+    "age": "58",
+    "gender": "male",
+    "bloodGroup": "O+",
+    "type": "IPD",
+    "medicalSpecialty": "Urology",
+    "description": "Prostate surgery",
+    "password": "manoj666",
+    "contact": {
+      "phone": "9876543229",
+      "email": "manoj@example.com"
+    },
+    "insurance": {
+      "provider": "Max Bupa",
+      "policyNumber": "MAX99001"
+    },
+    "status": "admitted",
+    "admissionDate": "2023-11-08",
+    "assignedDoctor": "Dr. Joshi",
+    "wardNumber": "21",
+    "cartNumber": "20",
+    "checkupDates": ["11-08-2023", "11-10-2023", "11-12-2023"]
+  }
+]

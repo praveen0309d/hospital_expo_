@@ -1,0 +1,38 @@
+[{
+  "_id": {
+    "$oid": "68aa0cd09a4bd2e89692e294"
+  },
+  "patientId": "P-68a61522",
+  "doctorId": {
+    "$oid": "68a30faada90caeb2d1de0f0"
+  },
+  "date": "2025-08-24T04:17",
+  "description": "NONE",
+  "notes": "hi",
+  "status": "pending",
+  "createdAt": {
+    "$date": "2025-08-23T18:47:44.522Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-23T18:47:44.522Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68aab1b562f10121604a43fc"
+  },
+  "patientId": "P-68a61522",
+  "doctorId": {
+    "$oid": "68a30faada90caeb2d1de0ef"
+  },
+  "date": "2025-08-24T15:02",
+  "description": "check up",
+  "notes": "for surgery",
+  "status": "approved",
+  "createdAt": {
+    "$date": "2025-08-24T06:31:17.446Z"
+  },
+  "updatedAt": {
+    "$date": "2025-08-24T06:43:42.604Z"
+  }
+}]

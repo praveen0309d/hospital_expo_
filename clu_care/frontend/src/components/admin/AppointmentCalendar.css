@@ -239,31 +239,6 @@
   gap: 5px;
 }
 
-.action-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #777;
-  transition: all 0.2s;
-}
-
-.action-btn:hover {
-  background-color: rgba(0,0,0,0.05);
-}
-
-.action-btn.edit:hover {
-  color: #2196f3;
-}
-
-.action-btn.delete:hover {
-  color: #f44336;
-}
 
 /* Week View */
 .week-view {

@@ -1,0 +1,46 @@
+[{
+  "_id": {
+    "$oid": "689b763e5c97410304ec4226"
+  },
+  "email": "admin@clucare.com",
+  "password": "scrypt:32768:8:1$X5ucw2Gn25ZOTkza$27648123bdc8a688b1946ee53826ad85aaf80ef1bc6b63ff90068e6a917f8f1f4556a0a7cc0e0124eb8746f872ddc86bd62b6b6bd9b8f809eeb12256c56e5ea4",
+  "role": "admin",
+  "name": "System Administrator",
+  "permissions": [
+    "manage_users",
+    "view_reports"
+  ],
+  "created_at": {
+    "$date": "2025-08-12T17:13:34.183Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68a609d9b2bfd9278f06606d"
+  },
+  "name": "Pharmacy Manager",
+  "email": "pharmacy@hospital.com",
+  "password": "pharmacy123",
+  "role": "pharmacy",
+  "department": "Pharmacy",
+  "permissions": [
+    "view_prescriptions",
+    "manage_inventory",
+    "issue_medicines"
+  ]
+},
+{
+  "_id": {
+    "$oid": "68a609d9b2bfd9278f06606e"
+  },
+  "name": "Lab Technician",
+  "email": "lab@hospital.com",
+  "password": "lab123",
+  "role": "lab",
+  "department": "Laboratory",
+  "permissions": [
+    "view_tests",
+    "manage_reports",
+    "update_results"
+  ]
+}]

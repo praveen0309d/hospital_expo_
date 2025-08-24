@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Emergency.css';
-import api from '../../services/api';
+import axios from 'axios';
 
 const Emergency = () => {
   const [patients, setPatients] = useState([]);
@@ -25,7 +25,7 @@ const Emergency = () => {
   const fetchPatients = async () => {
     try {
       setLoading(true);
-      const res = await api.get('/patients');
+      const res = await axios.get('http://localhost:5000/api/patients');
       setPatients(res.data);
     } catch (err) {
       console.error('Error fetching patients:', err);
@@ -37,7 +37,7 @@ const Emergency = () => {
   // Fetch departments
   const fetchDepartments = async () => {
     try {
-      const res = await api.get('/departments');
+      const res = await axios.get('http://localhost:5000/api/departments');
       setDepartments(res.data);
     } catch (err) {
       console.error('Error fetching departments:', err);
@@ -52,7 +52,9 @@ const Emergency = () => {
         return;
       }
       try {
-        const res = await api.get(`http://localhost:5000/staff/available?specialty=${formData.medicalSpecialty}`);
+        const res = await axios.get(
+          `http://localhost:5000/staff/available?specialty=${formData.medicalSpecialty}`
+        );
         setAvailableDoctors(res.data);
       } catch (err) {
         console.error('Error fetching doctors:', err);
@@ -68,7 +70,7 @@ const Emergency = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -83,8 +85,8 @@ const Emergency = () => {
         status: 'admitted'
       };
 
-      await api.post('/patients', patientData);
-      
+      await axios.post('http://localhost:5000/api/patients', patientData);
+
       // Reset form and close
       setShowAddForm(false);
       setFormData({
@@ -97,7 +99,7 @@ const Emergency = () => {
         cartNumber: ''
       });
       setSelectedDoctor(null);
-      
+
       // Refresh patient list
       fetchPatients();
       alert('Patient added successfully!');
@@ -109,36 +111,37 @@ const Emergency = () => {
     }
   };
 
-  const filteredPatients = patients.filter(p =>
-    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+const filteredPatients = patients.filter(
+  (p) =>
+    (p.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
     (p.patientId || '').toLowerCase().includes(searchTerm.toLowerCase())
-  );
+);
 
   return (
     <div className="emergency-container">
       <h2>Emergency Department - Patient Overview</h2>
-      
-      <div className="controls-container">
-        <div className="search-container">
+
+      <div className="emergency-controls-container">
+        <div className="emergency-search-container">
           <input
             type="text"
             placeholder="Search patients..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="search-input"
+            className="emergency-search-input"
           />
         </div>
-        
-        <button 
-          onClick={() => setShowAddForm(true)} 
-          className="add-patient-btn emergency-btn"
+
+        <button
+          onClick={() => setShowAddForm(true)}
+          className="emergency-add-patient-btn"
         >
           + Add New Patient
         </button>
       </div>
 
       {loading ? (
-        <div className="loading">Loading patients...</div>
+        <div className="emergency-loading">Loading patients...</div>
       ) : (
         <table className="emergency-table">
           <thead>
@@ -154,20 +157,26 @@ const Emergency = () => {
           </thead>
           <tbody>
             {filteredPatients.length > 0 ? (
-              filteredPatients.map(p => (
+              filteredPatients.map((p) => (
                 <tr key={p._id}>
                   <td>{p.name}</td>
                   <td>{p.age}</td>
                   <td>{p.gender}</td>
                   <td>{p.medicalSpecialty || 'Not specified'}</td>
-                  <td>{p.assignedDoctorName || p.assignedDoctor?.name || 'Unassigned'}</td>
+                  <td>
+                    {p.assignedDoctorName ||
+                      p.assignedDoctor?.name ||
+                      'Unassigned'}
+                  </td>
                   <td>{p.wardNumber || '-'}</td>
                   <td>{p.cartNumber || '-'}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="no-data">No patients found</td>
+                <td colSpan="7" className="emergency-no-data">
+                  No patients found
+                </td>
               </tr>
             )}
           </tbody>
@@ -176,21 +185,21 @@ const Emergency = () => {
 
       {/* Add Patient Form Modal */}
       {showAddForm && (
-        <div className="modal-overlay">
-          <div className="modal-content emergency-modal">
-            <div className="modal-header">
+        <div className="emergency-modal-overlay">
+          <div className="emergency-modal-content">
+            <div className="emergency-modal-header">
               <h3>Add New Emergency Patient</h3>
-              <button 
-                onClick={() => setShowAddForm(false)} 
-                className="close-btn"
+              <button
+                onClick={() => setShowAddForm(false)}
+                className="emergency-close-btn"
               >
                 ×
               </button>
             </div>
-            
+
             <form onSubmit={handleSubmit} className="emergency-form">
-              <div className="form-row">
-                <div className="emg_form">
+              <div className="emergency-form-row">
+                <div className="emergency-form-field">
                   <label>Full Name *</label>
                   <input
                     type="text"
@@ -200,8 +209,8 @@ const Emergency = () => {
                     required
                   />
                 </div>
-                
-                <div className="emg_form">
+
+                <div className="emergency-form-field">
                   <label>Age *</label>
                   <input
                     type="number"
@@ -212,9 +221,9 @@ const Emergency = () => {
                   />
                 </div>
               </div>
-              
-              <div className="form-row">
-                <div className="emg_form">
+
+              <div className="emergency-form-row">
+                <div className="emergency-form-field">
                   <label>Gender *</label>
                   <select
                     name="gender"
@@ -226,8 +235,8 @@ const Emergency = () => {
                     <option value="other">Other</option>
                   </select>
                 </div>
-                
-                <div className="emg_form">
+
+                <div className="emergency-form-field">
                   <label>Specialty *</label>
                   <select
                     name="medicalSpecialty"
@@ -236,31 +245,37 @@ const Emergency = () => {
                     required
                   >
                     <option value="">Select Specialty</option>
-                    {departments.map(d => (
-                      <option key={d._id} value={d.name}>{d.name}</option>
+                    {departments.map((d) => (
+                      <option key={d._id} value={d.name}>
+                        {d.name}
+                      </option>
                     ))}
                   </select>
                 </div>
               </div>
-              
-              <div className="form-row">
-                <div className="emg_form">
+
+              <div className="emergency-form-row">
+                <div className="emergency-form-field">
                   <label>Assigned Doctor</label>
                   <select
                     value={selectedDoctor?._id || ''}
                     onChange={(e) => {
-                      const doc = availableDoctors.find(d => d._id === e.target.value);
+                      const doc = availableDoctors.find(
+                        (d) => d._id === e.target.value
+                      );
                       setSelectedDoctor(doc || null);
                     }}
                   >
                     <option value="">Select Doctor</option>
-                    {availableDoctors.map(d => (
-                      <option key={d._id} value={d._id}>{d.name}</option>
+                    {availableDoctors.map((d) => (
+                      <option key={d._id} value={d._id}>
+                        {d.name}
+                      </option>
                     ))}
                   </select>
                 </div>
-                
-                <div className="emg_form">
+
+                <div className="emergency-form-field">
                   <label>Ward Number</label>
                   <input
                     type="text"
@@ -270,9 +285,9 @@ const Emergency = () => {
                   />
                 </div>
               </div>
-              
-              <div className="form-row">
-                <div className="emg_form">
+
+              <div className="emergency-form-row">
+                <div className="emergency-form-field">
                   <label>Room/Cart Number</label>
                   <input
                     type="text"
@@ -282,19 +297,19 @@ const Emergency = () => {
                   />
                 </div>
               </div>
-              
-              <div className="form-actions">
-                <button 
-                  type="button" 
+
+              <div className="emergency-form-actions">
+                <button
+                  type="button"
                   onClick={() => setShowAddForm(false)}
-                  className="cancel-btn"
+                  className="emergency-cancel-btn"
                 >
                   Cancel
                 </button>
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={loading}
-                  className="submit-btn"
+                  className="emergency-submit-btn"
                 >
                   {loading ? 'Adding...' : 'Add Patient'}
                 </button>

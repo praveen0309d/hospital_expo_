@@ -353,3 +353,25 @@ input:focus {
 .form-login:nth-child(1) { animation-delay: 0.2s; }
 .form-login:nth-child(2) { animation-delay: 0.3s; }
 .login-button { animation-delay: 0.4s; }
+
+.chat-with-ai {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.chat-with-ai a {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 12px;
+  background: #1abc9c;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.chat-with-ai a:hover {
+  background: #16a085;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}

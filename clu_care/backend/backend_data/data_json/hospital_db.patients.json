@@ -1,0 +1,728 @@
+[{
+  "_id": {
+    "$oid": "68a61522d4e1f2a3b4c5d7f1"
+  },
+  "patientId": "P-68a61522",
+  "name": "Praveen",
+  "age": "19",
+  "gender": "male",
+  "type": "OPD",
+  "medicalSpecialty": "Plastic Surgeon",
+  "status": "registered",
+  "wardNumber": "2",
+  "cartNumber": "10",
+  "password": "prav@123",
+  "contact": {
+    "email": "praveen2006@gmail.com",
+    "phone": "9123544946",
+    "address": "230-a"
+  },
+  "insurance": {
+    "provider": "1234",
+    "policyNumber": "j"
+  },
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0ef"
+  },
+  "prescriptions": [
+    {
+      "date": "2025-08-21",
+      "medicines": [
+        {
+          "name": "Paracetamol",
+          "dosage": "500mg",
+          "time": "After breakfast"
+        },
+        {
+          "name": "Amoxicillin",
+          "dosage": "250mg",
+          "time": "Before lunch"
+        },
+        {
+          "name": "Cetirizine",
+          "dosage": "10mg",
+          "time": "At night before sleep"
+        },
+        {
+          "name": "Vitamin D3",
+          "dosage": "1000IU",
+          "time": "After dinner"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-22",
+      "medicines": [
+        {
+          "name": "Ibuprofen",
+          "dosage": "400mg",
+          "time": "After breakfast"
+        },
+        {
+          "name": "Azithromycin",
+          "dosage": "500mg",
+          "time": "Before lunch"
+        },
+        {
+          "name": "Loratadine",
+          "dosage": "10mg",
+          "time": "At night before sleep"
+        },
+        {
+          "name": "Calcium",
+          "dosage": "600mg",
+          "time": "After dinner"
+        }
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "68aab40c1cb4f65e3c0fea86"
+      },
+      "date": "2025-08-24",
+      "medicines": [
+        {
+          "name": "Atorvastatin",
+          "dosage": "2 tablets",
+          "time": "As needed"
+        }
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "68aab4b31cb4f65e3c0fea87"
+      },
+      "date": "2025-08-24",
+      "medicines": [
+        {
+          "name": "Aspirin",
+          "dosage": "15ml",
+          "time": "After lunch"
+        }
+      ]
+    }
+  ],
+  "labReports": [
+    {
+      "date": "2025-08-18",
+      "testName": "Blood Test",
+      "results": "Normal",
+      "file": "/mypatient/uploads/blood_test_18Aug2025.pdf"
+    },
+    {
+      "date": "2025-08-18",
+      "testName": "Blood Test",
+      "results": "low",
+      "file": "/mypatient/uploads/sugar_test_praveen.pdf"
+    },
+    {
+      "_id": {
+        "$oid": "68aab6c61cb4f65e3c0fea88"
+      },
+      "date": "2025-09-13",
+      "testName": "ECG",
+      "results": "good",
+      "file": "/mypatient/uploads/blood_test_18Aug2025 (1).pdf"
+    },
+    {
+      "_id": {
+        "$oid": "68aab84a1cb4f65e3c0fea89"
+      },
+      "date": "0002-02-22",
+      "testName": "Complete Blood Count",
+      "results": "goo",
+      "file": "/mypatient/uploads/20250809_0102_Luxurious Modern Living Room_simple_compose_01k25jnm3pemmsxzb8874dw3qz.png"
+    },
+    {
+      "_id": {
+        "$oid": "68aab90d1cb4f65e3c0fea8a"
+      },
+      "date": "2025-08-23",
+      "testName": "ECG",
+      "results": "normal",
+      "file": "/mypatient/uploads/praveen_ecg.pdf"
+    }
+  ],
+  "appointments": [
+    {
+      "date": "2025-08-01",
+      "description": "Follow-up consultation"
+    },
+    {
+      "date": "2025-08-10",
+      "description": "Routine checkup"
+    },
+    {
+      "date": "2025-08-23",
+      "description": "2000"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "68a61523d4e1f2a3b4c5d7f2"
+  },
+  "patientId": "P-68a61523",
+  "name": "Ananya Sharma",
+  "age": "32",
+  "gender": "female",
+  "type": "IPD",
+  "medicalSpecialty": "Cardiology",
+  "status": "admitted",
+  "wardNumber": "5",
+  "cartNumber": "12",
+  "password": "ana@456",
+  "contact": {
+    "email": "ananya.sharma@gmail.com",
+    "phone": "9876543210",
+    "address": "45-B, MG Road"
+  },
+  "insurance": {
+    "provider": "HealthCare Inc",
+    "policyNumber": "HC789456"
+  },
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0f0"
+  },
+  "prescriptions": [
+    {
+      "date": "2025-08-20",
+      "medicines": [
+        {
+          "name": "Aspirin",
+          "dosage": "75mg",
+          "time": "Morning after food"
+        },
+        {
+          "name": "Atorvastatin",
+          "dosage": "10mg",
+          "time": "Night before sleep"
+        }
+      ]
+    }
+  ],
+  "labReports": [
+    {
+      "date": "2025-08-19",
+      "testName": "ECG",
+      "results": "Normal sinus rhythm",
+      "file": "/mypatient/uploads/ecg_ananya.pdf"
+    },
+    {
+      "date": "2025-08-19",
+      "testName": "Cholesterol Test",
+      "results": "Slightly elevated LDL",
+      "file": "/mypatient/uploads/cholesterol_ananya.pdf"
+    }
+  ],
+  "appointments": [
+    {
+      "date": "2025-08-25",
+      "description": "Cardiology follow-up"
+    },
+    {
+      "date": "2025-09-05",
+      "description": "Stress test"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "68a61524d4e1f2a3b4c5d7f3"
+  },
+  "patientId": "P-68a61524",
+  "name": "Rahul Verma",
+  "age": "45",
+  "gender": "male",
+  "type": "OPD",
+  "medicalSpecialty": "Orthopedics",
+  "status": "registered",
+  "wardNumber": "3",
+  "cartNumber": "7",
+  "password": "rahul@789",
+  "contact": {
+    "email": "rahul.verma@yahoo.com",
+    "phone": "8765432109",
+    "address": "78-C, Park Street"
+  },
+  "insurance": {
+    "provider": "MediSecure",
+    "policyNumber": "MS123789"
+  },
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0f1"
+  },
+  "prescriptions": [
+    {
+      "date": "2025-08-22",
+      "medicines": [
+        {
+          "name": "Diclofenac",
+          "dosage": "50mg",
+          "time": "Twice daily after food"
+        },
+        {
+          "name": "Calcium Supplement",
+          "dosage": "500mg",
+          "time": "Once daily"
+        }
+      ]
+    }
+  ],
+  "labReports": [
+    {
+      "date": "2025-08-21",
+      "testName": "X-Ray Right Knee",
+      "results": "Mild osteoarthritis",
+      "file": "/mypatient/uploads/xray_rahul.pdf"
+    }
+  ],
+  "appointments": [
+    {
+      "date": "2025-09-01",
+      "description": "Physiotherapy session"
+    },
+    {
+      "date": "2025-09-15",
+      "description": "Follow-up consultation"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "68a61525d4e1f2a3b4c5d7f4"
+  },
+  "patientId": "P-68a61525",
+  "name": "Priya Patel",
+  "age": "28",
+  "gender": "female",
+  "type": "OPD",
+  "medicalSpecialty": "Gynecology",
+  "status": "registered",
+  "wardNumber": "1",
+  "cartNumber": "5",
+  "password": "priya@123",
+  "contact": {
+    "email": "priya.patel@gmail.com",
+    "phone": "7654321098",
+    "address": "12-D, Nehru Nagar"
+  },
+  "insurance": {
+    "provider": "WomenHealth",
+    "policyNumber": "WH456123"
+  },
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0f2"
+  },
+  "prescriptions": [
+    {
+      "date": "2025-08-23",
+      "medicines": [
+        {
+          "name": "Folic Acid",
+          "dosage": "5mg",
+          "time": "Once daily"
+        },
+        {
+          "name": "Iron Supplement",
+          "dosage": "100mg",
+          "time": "Once daily after food"
+        }
+      ]
+    }
+  ],
+  "labReports": [
+    {
+      "date": "2025-08-22",
+      "testName": "Ultrasound",
+      "results": "Normal",
+      "file": "/mypatient/uploads/ultrasound_priya.pdf"
+    },
+    {
+      "date": "2025-08-22",
+      "testName": "Blood Hormones",
+      "results": "Within normal limits",
+      "file": "/mypatient/uploads/hormones_priya.pdf"
+    }
+  ],
+  "appointments": [
+    {
+      "date": "2025-09-10",
+      "description": "Routine checkup"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "68a61527d4e1f2a3b4c5d7f6"
+  },
+  "patientId": "P-68a61527",
+  "name": "Sneha Reddy",
+  "age": "25",
+  "gender": "female",
+  "type": "OPD",
+  "medicalSpecialty": "Dermatology",
+  "status": "registered",
+  "wardNumber": "2",
+  "cartNumber": "8",
+  "password": "sneha@789",
+  "contact": {
+    "email": "sneha.reddy@gmail.com",
+    "phone": "9432109876",
+    "address": "34-F, Jubilee Hills"
+  },
+  "insurance": {
+    "provider": "SkinCare Plus",
+    "policyNumber": "SCP345678"
+  },
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0f4"
+  },
+  "prescriptions": [
+    {
+      "date": "2025-08-24",
+      "medicines": [
+        {
+          "name": "Clindamycin Lotion",
+          "dosage": "1%",
+          "time": "Apply twice daily"
+        },
+        {
+          "name": "Tretinoin Cream",
+          "dosage": "0.025%",
+          "time": "Apply at night"
+        }
+      ]
+    }
+  ],
+  "labReports": [
+    {
+      "date": "2025-08-23",
+      "testName": "Skin Scraping",
+      "results": "No fungal elements",
+      "file": "/mypatient/uploads/skin_sneha.pdf"
+    }
+  ],
+  "appointments": [
+    {
+      "date": "2025-09-12",
+      "description": "Follow-up for acne treatment"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "68a61528d4e1f2a3b4c5d7f7"
+  },
+  "patientId": "P-68a61528",
+  "name": "Arjun Kumar",
+  "age": "8",
+  "gender": "male",
+  "type": "IPD",
+  "medicalSpecialty": "Pediatrics",
+  "status": "admitted",
+  "wardNumber": "4",
+  "cartNumber": "3",
+  "password": "arjun@123",
+  "contact": {
+    "email": "arjun.kumar@yahoo.com",
+    "phone": "8321098765",
+    "address": "56-G, Anna Nagar"
+  },
+  "insurance": {
+    "provider": "ChildShield",
+    "policyNumber": "CS901234"
+  },
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0f5"
+  },
+  "prescriptions": [
+    {
+      "date": "2025-08-22",
+      "medicines": [
+        {
+          "name": "Amoxicillin Syrup",
+          "dosage": "250mg/5ml",
+          "time": "Three times daily"
+        },
+        {
+          "name": "Paracetamol Syrup",
+          "dosage": "120mg/5ml",
+          "time": "As needed for fever"
+        }
+      ]
+    }
+  ],
+  "labReports": [
+    {
+      "date": "2025-08-21",
+      "testName": "Throat Swab",
+      "results": "Strep positive",
+      "file": "/mypatient/uploads/throat_arjun.pdf"
+    },
+    {
+      "date": "2025-08-21",
+      "testName": "CBC",
+      "results": "Elevated WBC",
+      "file": "/mypatient/uploads/cbc_arjun.pdf"
+    }
+  ],
+  "appointments": [
+    {
+      "date": "2025-08-29",
+      "description": "Pediatric follow-up"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "68a61529d4e1f2a3b4c5d7f8"
+  },
+  "patientId": "P-68a61529",
+  "name": "Meera Desai",
+  "age": "52",
+  "gender": "female",
+  "type": "OPD",
+  "medicalSpecialty": "Endocrinology",
+  "status": "registered",
+  "wardNumber": "2",
+  "cartNumber": "11",
+  "password": "meera@456",
+  "contact": {
+    "email": "meera.desai@gmail.com",
+    "phone": "7210987654",
+    "address": "78-H, Satellite Area"
+  },
+  "insurance": {
+    "provider": "DiabeCare",
+    "policyNumber": "DC567890"
+  },
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0f6"
+  },
+  "prescriptions": [
+    {
+      "date": "2025-08-23",
+      "medicines": [
+        {
+          "name": "Metformin",
+          "dosage": "500mg",
+          "time": "Twice daily after food"
+        },
+        {
+          "name": "Glimepiride",
+          "dosage": "2mg",
+          "time": "Once daily morning"
+        }
+      ]
+    }
+  ],
+  "labReports": [
+    {
+      "date": "2025-08-22",
+      "testName": "HbA1c",
+      "results": "7.2%",
+      "file": "/mypatient/uploads/hba1c_meera.pdf"
+    },
+    {
+      "date": "2025-08-22",
+      "testName": "Fasting Blood Sugar",
+      "results": "145 mg/dL",
+      "file": "/mypatient/uploads/sugar_meera.pdf"
+    }
+  ],
+  "appointments": [
+    {
+      "date": "2025-09-08",
+      "description": "Diabetes management consultation"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "68a61530d4e1f2a3b4c5d7f9"
+  },
+  "patientId": "P-68a61530",
+  "name": "Karan Malhotra",
+  "age": "35",
+  "gender": "male",
+  "type": "IPD",
+  "medicalSpecialty": "Gastroenterology",
+  "status": "admitted",
+  "wardNumber": "6",
+  "cartNumber": "9",
+  "password": "karan@789",
+  "contact": {
+    "email": "karan.malhotra@hotmail.com",
+    "phone": "6109876543",
+    "address": "23-I, Civil Lines"
+  },
+  "insurance": {
+    "provider": "DigestWell",
+    "policyNumber": "DW234567"
+  },
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0f7"
+  },
+  "prescriptions": [
+    {
+      "date": "2025-08-21",
+      "medicines": [
+        {
+          "name": "Pantoprazole",
+          "dosage": "40mg",
+          "time": "Once daily before food"
+        },
+        {
+          "name": "Dompéridone",
+          "dosage": "10mg",
+          "time": "Three times daily before food"
+        }
+      ]
+    }
+  ],
+  "labReports": [
+    {
+      "date": "2025-08-20",
+      "testName": "Endoscopy",
+      "results": "Gastritis observed",
+      "file": "/mypatient/uploads/endoscopy_karan.pdf"
+    },
+    {
+      "date": "2025-08-20",
+      "testName": "H. Pylori Test",
+      "results": "Positive",
+      "file": "/mypatient/uploads/hpylori_karan.pdf"
+    }
+  ],
+  "appointments": [
+    {
+      "date": "2025-08-30",
+      "description": "Post-treatment evaluation"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "68a61531d4e1f2a3b4c5d7fa"
+  },
+  "patientId": "P-68a61531",
+  "name": "Neha Gupta",
+  "age": "29",
+  "gender": "female",
+  "type": "OPD",
+  "medicalSpecialty": "Ophthalmology",
+  "status": "registered",
+  "wardNumber": "1",
+  "cartNumber": "6",
+  "password": "neha@123",
+  "contact": {
+    "email": "neha.gupta@gmail.com",
+    "phone": "5098765432",
+    "address": "89-J, Sector 15"
+  },
+  "insurance": {
+    "provider": "VisionPlus",
+    "policyNumber": "VP890123"
+  },
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0f8"
+  },
+  "prescriptions": [
+    {
+      "date": "2025-08-24",
+      "medicines": [
+        {
+          "name": "Artificial Tears",
+          "dosage": "0.5%",
+          "time": "Four times daily"
+        },
+        {
+          "name": "Cyclosporine",
+          "dosage": "0.05%",
+          "time": "Twice daily"
+        }
+      ]
+    }
+  ],
+  "labReports": [
+    {
+      "date": "2025-08-23",
+      "testName": "Eye Pressure Test",
+      "results": "Normal",
+      "file": "/mypatient/uploads/eye_pressure_neha.pdf"
+    },
+    {
+      "date": "2025-08-23",
+      "testName": "Retinal Scan",
+      "results": "No abnormalities",
+      "file": "/mypatient/uploads/retinal_neha.pdf"
+    }
+  ],
+  "appointments": [
+    {
+      "date": "2025-09-14",
+      "description": "Dry eye follow-up"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "68aa2013b61544aed1449e54"
+  },
+  "patientId": "P-68aa2013",
+  "name": "T",
+  "age": "11",
+  "gender": "male",
+  "bloodGroup": "A+",
+  "type": "OPD",
+  "medicalSpecialty": "Intensivist / Cardiologist",
+  "description": "99",
+  "password": "tamil@420",
+  "contact": {
+    "phone": "1234567890",
+    "email": "tamil420@gmail.com",
+    "address": "jq1j"
+  },
+  "insurance": {
+    "provider": "2",
+    "policyNumber": "1"
+  },
+  "status": "registered",
+  "admissionDate": null,
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0ed"
+  },
+  "wardNumber": "2",
+  "cartNumber": "3"
+},
+{
+  "_id": {
+    "$oid": "68aab0d362f10121604a43fb"
+  },
+  "patientId": "P-68aab0d3",
+  "name": "Hnri",
+  "age": "19",
+  "gender": "male",
+  "bloodGroup": "A+",
+  "type": "OPD",
+  "medicalSpecialty": "Intensivist / Cardiologist",
+  "description": "heart attackk",
+  "password": "hnri@123",
+  "contact": {
+    "phone": "9876543210",
+    "email": "hnri@gmail.com",
+    "address": "250@"
+  },
+  "insurance": {
+    "provider": "123",
+    "policyNumber": "123"
+  },
+  "status": "registered",
+  "admissionDate": null,
+  "assignedDoctor": {
+    "$oid": "68a30faada90caeb2d1de0ed"
+  },
+  "wardNumber": "3",
+  "cartNumber": "2"
+}]

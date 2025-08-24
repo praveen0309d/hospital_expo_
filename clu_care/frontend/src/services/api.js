@@ -1,8 +1,8 @@
-import axios from 'axios';
+let API_URL = "http://localhost:5000/"; // ✅ default for local development
 
-const api = axios.create({
-  baseURL: 'http://localhost:5000/api', // ⚠ Make sure this is correct
-//   timeout: 5000
-});
+// ✅ If your frontend is running on Dev Tunnel, switch to Flask tunnel
+if (window.location.hostname.includes("devtunnels.ms")) {
+  API_URL = "https://9wdd2cbc-5000.inc1.devtunnels.ms/"; // replace with your Flask tunnel URL
+}
 
-export default api;
+export default API_URL;

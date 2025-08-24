@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import "./Appointment.css";
+import API_URL from "../../services/api";
 const Appointment = () => {
   const [activeTab, setActiveTab] = useState("myAppointments");
   const [departments, setDepartments] = useState([]);
@@ -24,7 +25,7 @@ const Appointment = () => {
   // Fetch departments
   const fetchDepartments = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/appointments/departments", {
+      const res = await axios.get(`${API_URL}/appointments/departments`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setDepartments(res.data);
@@ -58,7 +59,7 @@ const Appointment = () => {
     if (!user || !user.patientId) return;
     try {
       const res = await axios.get(
-        `http://localhost:5000/appointments/mine/${user.patientId}`,
+        `${API_URL}/appointments/mine/${user.patientId}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setAppointments(res.data);
@@ -89,7 +90,7 @@ const Appointment = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/appointments/add",
+        `${API_URL}/appointments/add`,
         {
           patientId: user.patientId,
           doctorId: formData.doctorId,

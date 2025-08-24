@@ -104,9 +104,11 @@ def get_available_doctors():
 # ================== PATIENT ENDPOINTS ==================
 
 # Get all patients
+# Get all patients
 @admin_bp.route("/api/patients", methods=["GET"])
 def get_patients():
     patients = list(patients_collection.find())
+
     for patient in patients:
         # Get assigned doctor name
         if patient.get("assignedDoctor"):
@@ -117,10 +119,28 @@ def get_patients():
                 patient["assignedDoctorName"] = None
         else:
             patient["assignedDoctorName"] = None
-        
-        serialize_doc(patient)  # Convert ObjectIds to string
 
-    return jsonify(serialize_docs(patients))
+        # Convert top-level ObjectId to string
+        patient["_id"] = str(patient["_id"])
+
+        # Convert nested ObjectIds in assignedDoctor (if any)
+        if patient.get("assignedDoctor"):
+            patient["assignedDoctor"] = str(patient["assignedDoctor"])
+
+        # Convert nested ObjectIds in labReports (remove _id if not needed)
+        if "labReports" in patient:
+            for report in patient["labReports"]:
+                if "_id" in report:
+                    report["_id"] = str(report["_id"])  # Keep if you need it, or delete report["_id"]
+
+        # Convert nested ObjectIds in prescriptions (if any)
+        if "prescriptions" in patient:
+            for pres in patient["prescriptions"]:
+                for med in pres.get("medicines", []):
+                    # Usually medicines don't have ObjectIds, skip unless added
+                    pass
+
+    return jsonify(patients)
 
 # Add new patient
 @admin_bp.route("/api/patients", methods=["POST"])
@@ -174,7 +194,33 @@ def add_patient():
         }), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+# ------------------- EDIT PATIENT -------------------
+@admin_bp.route("/api/patients/<id>", methods=["PUT"])
+def edit_patient(id):
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
 
+    result = patients_collection.update_one(
+        {"_id": ObjectId(id)},
+        {"$set": data}
+    )
+
+    if result.matched_count == 0:
+        return jsonify({"error": "Patient not found"}), 404
+
+    return jsonify({"message": "Patient updated successfully"}), 200
+
+
+# ------------------- DELETE PATIENT -------------------
+@admin_bp.route("/api/patients/<id>", methods=["DELETE"])
+def delete_patient(id):
+    result = patients_collection.delete_one({"_id": ObjectId(id)})
+
+    if result.deleted_count == 0:
+        return jsonify({"error": "Patient not found"}), 404
+
+    return jsonify({"message": "Patient deleted successfully"}), 200
 
 # ================== WARD & BED MANAGEMENT ==================
 @admin_bp.route("/api/beds", methods=["GET"])
